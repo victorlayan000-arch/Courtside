@@ -5,7 +5,7 @@
 <style>
 :root{
   /* Layout: sticky sportsbook header with tabs; one workspace per tab; markets left, bet slip right. Single dark "court at night" look. */
-  --bg:#0a0f1c; --panel:#111a2e; --panel-2:#17233d; --line:#26375c;
+  --bg:#09101f; --panel:#111a2e; --panel-2:#17233d; --line:#26375c;
   --fg:#e9eefa; --muted:#8d9ec2; --accent:#3d96f5; --accent-ink:#04101f; --brand:#ee3b5b;
   --win:#35d08a; --loss:#ff6272; --push:#f2b84b;
   --s0:#4aa3ff; --s1:#ff6f86; --s2:#f2b84b; --s3:#35d08a;
@@ -14,10 +14,21 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font:15px/1.45 var(--body);
+html{background:#09101f}
+body{position:relative;isolation:isolate;background:
+  linear-gradient(180deg,rgba(3,8,20,.28) 0%,rgba(3,8,20,.12) 38%,rgba(74,8,18,.42) 72%,rgba(145,35,40,.78) 100%),
+  radial-gradient(ellipse at 50% 88%,rgba(199,77,82,.78) 0 8%,rgba(116,25,37,.82) 34%,transparent 68%),
+  linear-gradient(135deg,#111d38 0%,#09101f 44%,#45101b 78%,#7c2028 100%);
+  color:var(--fg);font:15px/1.45 var(--body);
   padding-block:0 5rem;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:40}
+body::after{content:"";position:fixed;z-index:-1;left:0;right:0;bottom:0;height:32vh;pointer-events:none;
+  background:
+    linear-gradient(90deg,transparent calc(50% - 1px),rgba(255,255,255,.12) calc(50% - 1px),rgba(255,255,255,.12) calc(50% + 1px),transparent calc(50% + 1px)),
+    radial-gradient(ellipse at 50% 105%,transparent 0 22%,rgba(255,255,255,.15) 22.2% 22.8%,transparent 23.2%),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 2px,transparent 2px 72px);
+  mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.85) 78%,transparent 100%)}
 h1,h2,h3,h4{font-family:var(--display);font-weight:600;letter-spacing:.03em;text-transform:uppercase;margin:0;text-wrap:balance}
 h2{font-size:1.7rem;line-height:1.1}
 h3{font-size:1.2rem}
@@ -28,7 +39,7 @@ button{cursor:pointer}
 .num,td.n,.odd b,.big{font-variant-numeric:tabular-nums}
 .muted{color:var(--muted)}
 .small{font-size:.8rem}
-.wrap{max-width:1240px;margin:0 auto}
+.wrap{position:relative;z-index:1;max-width:1240px;margin:0 auto}
 
 /* header */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:1px solid var(--line);
@@ -48,7 +59,7 @@ nav.tabs::-webkit-scrollbar{display:none}
 main{padding-top:1.25rem;display:flex;flex-direction:column;gap:1.75rem}
 
 /* generic */
-.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1rem}
+.card{background:rgba(17,26,46,.94);border:1px solid rgba(130,157,206,.38);border-radius:10px;padding:1rem;box-shadow:0 12px 30px rgba(2,6,15,.18)}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:1rem}
 .sec{display:flex;flex-direction:column;gap:.75rem}
 .sec>header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.25rem .75rem}
@@ -86,12 +97,20 @@ tr.click:hover td{background:var(--panel-2)}
 .next{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem 2rem;border:1px solid var(--line);border-left:5px solid var(--brand);border-radius:10px;padding:1rem 1.25rem;background:linear-gradient(100deg,var(--panel-2),var(--panel))}
 .vs{display:flex;align-items:baseline;gap:.75rem;font-family:var(--display);font-weight:700;font-size:2.6rem;line-height:1;letter-spacing:.04em}
 .vs i{font-style:normal;font-size:1.1rem;color:var(--muted);font-weight:500}
+.matchup-teams{display:flex;align-items:center;gap:.65rem}
+.team-lockup{display:flex;align-items:center;gap:.45rem}
+.team-logo{width:46px;height:46px;object-fit:contain;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35))}
+.team-lockup .team-code{font-family:var(--display);font-weight:700;font-size:2.6rem;line-height:1}
+.matchup-teams i{font-style:normal;font-size:1.1rem;color:var(--muted)}
+.table-team-logo{display:inline-flex;align-items:center;gap:.35rem}
+.table-team-logo .team-logo{width:26px;height:26px}
 .next-r{display:flex;flex-direction:column;gap:.25rem;min-width:min(100%,280px)}
 .hist{font-size:.85rem;color:var(--muted);margin-top:.35rem}
 
 /* player card */
 .pcard{display:flex;gap:1rem;align-items:center}
-.avatar{flex:none;width:68px;height:68px;border-radius:12px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:2rem;letter-spacing:.04em}
+.avatar{flex:none;width:68px;height:68px;border-radius:12px;background:var(--accent);border:1px solid rgba(233,238,250,.55);overflow:hidden;display:grid;place-items:center}
+.avatar img{width:100%;height:100%;object-fit:cover;object-position:center 28%}
 .pcard h3{font-size:1.7rem;line-height:1}
 .chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.45rem}
 .chip{font-size:.78rem;border:1px solid var(--line);border-radius:999px;padding:.1rem .6rem;color:var(--muted)}
@@ -119,9 +138,17 @@ svg.cv{display:block;width:100%;height:auto}
 /* sportsbook */
 .book{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:1.5rem;align-items:start}
 .markets{display:flex;flex-direction:column;gap:1.5rem;min-width:0}
-.mgroup>header{border-bottom:2px solid var(--line);padding-bottom:.35rem;margin-bottom:.1rem}
-.mgroup>header p{font-size:.8rem;color:var(--muted);margin-top:.15rem}
+.mgroup{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:rgba(17,26,46,.48)}
+.mgroup>header{display:flex;align-items:center;justify-content:space-between;gap:.75rem;width:100%;border:0;border-bottom:1px solid var(--line);padding:.65rem .8rem;margin:0;background:var(--panel);cursor:pointer;user-select:none}
+.mgroup>header:hover{background:var(--panel-2)}
+.mgroup>header .mgroup-title{display:flex;flex-direction:column;gap:.05rem}
+.mgroup>header p{font-size:.76rem;color:var(--muted);margin:0}
+.mgroup-toggle{width:28px;height:28px;border:1px solid var(--line);border-radius:5px;display:grid;place-items:center;color:var(--fg);font-family:var(--display);font-size:1.15rem;background:var(--bg)}
+.mgroup.closed>header{border-bottom:0}
+.mgroup.closed .mgroup-body{display:none}
+.mgroup-body{padding:0 .8rem .25rem}
 .mrow{display:grid;grid-template-columns:minmax(120px,1.1fr) 168px minmax(0,1fr) minmax(0,1fr);gap:.4rem .7rem;align-items:center;padding:.65rem 0;border-bottom:1px solid var(--line)}
+.matchrow{grid-template-columns:minmax(150px,1.2fr) repeat(3,minmax(120px,1fr));}
 .mname{display:flex;flex-direction:column;gap:.2rem;font-weight:600}
 .mname .tags{display:flex;flex-wrap:wrap;gap:.25rem}
 .lc{display:grid;grid-template-columns:34px 1fr 34px;gap:.25rem}
@@ -163,11 +190,64 @@ svg.cv{display:block;width:100%;height:auto}
 .pair span{color:var(--muted)}
 
 /* bets */
-.bet{display:flex;flex-direction:column;gap:.5rem;padding:.8rem 0;border-bottom:1px solid var(--line)}
-.bet .h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.4rem .8rem}
-.bet ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.25rem}
-.bet li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.2rem .8rem;font-size:.9rem}
-.bet .f{display:flex;flex-wrap:wrap;gap:.3rem 1.25rem;font-size:.85rem;color:var(--muted)}
+.bet-list{display:flex;flex-direction:column;gap:.65rem}
+.bet{position:relative;display:flex;flex-direction:column;gap:0;padding:.25rem 0 0;background:rgba(11,18,31,.98);border:1px solid #26375c;border-left:3px solid var(--brand);border-radius:2px;font-family:var(--body)}
+.bet{overflow:hidden;transition:background .16s ease,border-color .16s ease,box-shadow .16s ease}
+.bet:hover,.bet:focus-within,.bet:focus{background:#0c1422;border-color:#3b527c;box-shadow:0 8px 18px rgba(0,0,0,.22);outline:none}
+.bet ul,.bet .f{max-height:0;opacity:0;overflow:hidden;transition:max-height .18s ease,opacity .12s ease,padding .18s ease,margin .18s ease}
+.bet:hover ul,.bet:focus-within ul,.bet:focus ul{max-height:300px;opacity:1}
+.bet:hover .f,.bet:focus-within .f,.bet:focus .f{max-height:180px;opacity:1}
+.bet .h{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;padding:.35rem .55rem .25rem}
+.bet .h .bet-title{font-family:var(--display);font-size:.92rem;font-weight:700;letter-spacing:.055em;text-transform:uppercase}
+.bet .h .bet-date{font-size:.68rem;color:var(--muted);margin-left:.35rem}
+.bet-status{font-family:var(--display);font-size:.95rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.bet-status.win{color:var(--win)}.bet-status.loss{color:var(--loss)}.bet-status.push{color:var(--push)}.bet-status.pend{color:var(--accent)}
+.bet-type{display:inline-block;margin:.05rem .55rem .35rem;padding:.08rem .38rem;border-radius:2px;background:#6dbb34;color:#09101f;font-family:var(--display);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.bet-rule{height:2px;margin:0;background:var(--brand);box-shadow:0 1px 0 #8e2738}
+.bet ul{list-style:none;margin:.12rem .55rem 0;padding:0;display:flex;flex-direction:column}
+.bet li{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:.5rem;min-height:1.7rem;border-bottom:1px solid rgba(38,55,92,.38);font-family:var(--display);font-size:.92rem}
+.bet li:last-child{border-bottom:0}
+.bet li .bet-leg-main{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bet li .bet-leg-odds{font-weight:700;font-variant-numeric:tabular-nums}
+.bet li .bet-leg-result{font-family:var(--body);font-size:.62rem;text-transform:uppercase;margin-left:.35rem;color:var(--muted)}
+.bet .f{display:grid;grid-template-columns:1fr auto;gap:.12rem .75rem;padding:.38rem .55rem .42rem;border-top:1px solid rgba(38,55,92,.7);font-family:var(--display);font-size:.76rem;letter-spacing:.025em;text-transform:uppercase;color:var(--fg)}
+.bet .f .right{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* casino games */
+.casino-menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
+.casino-game-card{position:relative;min-height:260px;border:1px solid #40547f;border-radius:12px;overflow:hidden;cursor:pointer;background:linear-gradient(145deg,#142650,#09101f);display:flex;align-items:flex-end;padding:1.1rem;text-align:left;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.casino-game-card:hover,.casino-game-card:focus-visible{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 14px 30px rgba(0,0,0,.32)}
+.casino-game-card.baccarat{background:radial-gradient(circle at 75% 25%,rgba(243,201,95,.26),transparent 28%),linear-gradient(145deg,#17274d,#09101f)}
+.casino-art{position:absolute;inset:0;display:grid;place-items:center;opacity:.92}
+.casino-art .chip-stack{width:78px;height:78px;border-radius:50%;border:10px dashed #f3ca5f;background:#a31d37;box-shadow:0 12px 0 #5d1022,0 18px 20px rgba(0,0,0,.4)}
+.casino-art .cards{position:relative;width:170px;height:150px}
+.casino-art .cards i{position:absolute;width:78px;height:112px;border-radius:8px;background:#f7f7f2;border:5px solid #e2e3e8;box-shadow:0 10px 20px rgba(0,0,0,.38);color:#b52338;font-family:Georgia,serif;font-size:2.2rem;font-weight:700;display:grid;place-items:center}
+.casino-art .cards i:first-child{left:18px;top:20px;transform:rotate(-12deg)}
+.casino-art .cards i:last-child{right:14px;top:5px;transform:rotate(10deg);color:#171b26}
+.casino-card-copy{position:relative;z-index:2;background:linear-gradient(90deg,rgba(5,10,22,.96),rgba(5,10,22,.55));margin:-1.1rem;padding:1.1rem;width:calc(100% + 2.2rem)}
+.casino-card-copy h3{font-size:1.8rem}
+.casino-card-copy p{color:#b9c5dd;font-size:.82rem}
+.casino-table{border:1px solid #40547f;border-radius:14px;padding:1rem;background:radial-gradient(ellipse at 50% 115%,rgba(45,137,92,.55),transparent 55%),linear-gradient(150deg,#10213d,#08101f)}
+.casino-table-head{display:flex;justify-content:space-between;align-items:center;gap:.75rem;margin-bottom:.8rem}
+.casino-hands{display:grid;grid-template-columns:1fr 1fr;gap:1rem;min-height:170px}
+.casino-hand{border:1px solid rgba(161,183,221,.25);border-radius:10px;padding:.75rem;background:rgba(4,10,20,.38)}
+.casino-hand h3{display:flex;justify-content:space-between;align-items:center}
+.cards-row{display:flex;flex-wrap:wrap;gap:.5rem;min-height:118px;align-items:center}
+.playing-card{width:72px;height:104px;border-radius:7px;background:#f7f7f2;border:2px solid #dfe2ea;color:#171b26;display:flex;flex-direction:column;justify-content:space-between;padding:.38rem;font-family:Georgia,serif;font-size:1.05rem;font-weight:700;box-shadow:0 7px 16px rgba(0,0,0,.32)}
+.playing-card.red{color:#bb1f35}
+.cards-row .playing-card{animation:dealCard .38s cubic-bezier(.2,.75,.25,1) both;transform-origin:top right}
+.cards-row .playing-card:nth-child(2){animation-delay:.12s}
+.cards-row .playing-card:nth-child(3){animation-delay:.24s}
+.cards-row .playing-card:nth-child(4){animation-delay:.36s}
+.playing-card.back{background:repeating-linear-gradient(45deg,#a51f35 0 8px,#c52b43 8px 16px);border:5px solid #f1eee6;color:transparent}
+@keyframes dealCard{from{opacity:0;transform:translate(120px,-80px) rotate(18deg) scale(.72)}to{opacity:1;transform:none}}
+.casino-controls{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem}
+.casino-bet-panel{display:grid;grid-template-columns:repeat(3,minmax(120px,1fr));gap:.55rem;margin-top:.8rem}
+.casino-bet-option{border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:.7rem;text-align:center;cursor:pointer}
+.casino-bet-option:hover,.casino-bet-option.on{border-color:var(--accent);background:var(--panel-2)}
+.baccarat-history{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.7rem}
+.baccarat-history i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--display);font-weight:700;font-size:.75rem;border:1px solid rgba(255,255,255,.25)}
+.baccarat-history i.player{background:#3d96f5;color:#04101f}.baccarat-history i.banker{background:#ff6272;color:#1c0509}.baccarat-history i.tie{background:#35d08a;color:#04101f}
 
 /* dialog + toast */
 .veil{position:fixed;inset:0;z-index:60;background:rgba(3,6,14,.72);display:grid;place-items:center;padding:1rem}
@@ -186,8 +266,15 @@ svg.cv{display:block;width:100%;height:auto}
 @media (max-width:700px){
   .mrow{grid-template-columns:1fr 1fr}
   .mname,.lc{grid-column:1/-1}
+  .matchrow{grid-template-columns:1fr 1fr}
+  .matchrow .mname,.matchrow .minfo{grid-column:1/-1}
   .vs{font-size:2rem}
   .brand .sub{display:none}
+  .casino-menu{grid-template-columns:1fr}
+  .casino-hands{grid-template-columns:1fr}
+  .casino-bet-panel{grid-template-columns:1fr}
+  .casino-game-card{min-height:220px}
+  .playing-card{width:62px;height:90px}
 }
 @media (prefers-reduced-motion:no-preference){
   #toast div{animation:rise .2s ease-out}
@@ -215,6 +302,9 @@ var MARKETS=[],MK={};
 STATS.forEach(function(s){MARKETS.push({id:'player:'+s.k,group:'player',key:s.k,label:s.l,kind:s.kind,sd:s.sd,full:true,quarter:false});});
 ['my','opp','game','spread'].forEach(function(g){SCOPES.forEach(function(sc){
   MARKETS.push({id:g+':'+sc[0],group:g,key:sc[0],label:sc[1],kind:'n',sd:SDP[g][sc[0]==='full'?0:1],full:sc[0]==='full',quarter:sc[0]!=='full'});});});
+SCOPES.slice(1).forEach(function(sc){MARKETS.push({id:'qwinner:'+sc[0],group:'qwinner',key:sc[0],label:sc[1]+' winner',kind:'n',sd:12,full:false,quarter:true});});
+MARKETS.push({id:'qwinner:sweep',group:'qwinner',key:'sweep',label:'Win all quarters',kind:'n',sd:20,full:false,quarter:true});
+MARKETS.push({id:'matchwinner:full',group:'matchwinner',key:'full',label:'Match winner / overtime',kind:'n',sd:12,full:true,quarter:false});
 MARKETS.forEach(function(m){MK[m.id]=m;});
 
 var uid=function(){return Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);};
@@ -222,12 +312,16 @@ var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){r
 var r1=function(x){return (Math.round(x*10)/10).toFixed(1);};
 var r2=function(x){return Math.round(x*100)/100;};
 var pct=function(p){return (Math.round(p*1000)/10)+'%';};
-var am=function(o){return o==null?'—':(o>0?'+'+o:String(o));};
+var americanToDecimal=function(o){return o==null||!isFinite(o)?null:r2(o>0?1+o/100:1+100/-o);};
+var parseDecimalOdds=function(s){var d=parseNum(s);return d!=null&&d>=1.01?d:null;};
+var decimalToAmerican=function(d){d=parseFloat(d);if(!isFinite(d)||d<1.01)return null;return d>=2?Math.round((d-1)*100):Math.round(-100/(d-1));};
+var am=function(o){var d=americanToDecimal(o);return d==null?'—':d.toFixed(2);};
 var sgn=function(x){return (x>0?'+':x<0?'−':'')+Math.abs(x);};
 var ccFmt=function(x){var v=r2(x);return (Number.isInteger(v)?v.toLocaleString('en-US'):v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}))+' CC';};
 var ccS=function(x){return (x>0?'+':x<0?'−':'')+ccFmt(Math.abs(x));};
-var avg=function(a){return a.length?a.reduce(function(x,y){return x+y;},0)/a.length:null;};
+var avg=function(a){a=a.filter(function(x){return x!=null&&!isNaN(x);});return a.length?a.reduce(function(x,y){return x+y;},0)/a.length:null;};
 var sum=function(a){return a.reduce(function(x,y){return x+y;},0);};
+var sumKnown=function(a){var known=a.filter(function(x){return x!=null&&!isNaN(x);});return known.length?sum(known):null;};
 var clamp=function(x,a,b){return Math.max(a,Math.min(b,x));};
 var parseNum=function(s){s=String(s==null?'':s).trim();if(!/^-?\d*\.?\d*$/.test(s))return null;var v=parseFloat(s);return isFinite(v)?v:null;};
 var parseInt0=function(s){s=String(s==null?'':s).trim();return /^\d+$/.test(s)?parseInt(s,10):null;};
@@ -236,14 +330,37 @@ var fmtTime=function(t){try{return new Date(t).toLocaleString(undefined,{month:'
 var todayStr=function(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
 
 /* ---------- state ---------- */
-var storageOK=true,state,ui={tab:'dash',perf:'pra',form:null,formErr:'',slipErr:'',dialog:null,oddsEdit:{},raw:{},mt:null,betsFilter:'all',ledFilter:'all',showBackup:false,backupMsg:''};
-function defaults(){return {v:1,
+var storageOK=true,state,ui={tab:'dash',perf:'pra',form:null,formErr:'',slipErr:'',dialog:null,oddsEdit:{},raw:{},mt:null,betsFilter:'all',ledFilter:'all',showBackup:false,backupMsg:'',marketOpen:{match:true,handicap:true,totals:true,quarters:true,props:true},casino:'menu',casinoStake:'100',baccaratStake:'100',baccaratSide:'banker'};
+function defaults(){return {v:1,recentImported:false,
  player:{name:'Sebastian Victor',team:'PHI',pos:'',ovr:'',height:'',build:''},
  settings:{start:10000,margin:5,includeOT:false,baseMy:53.9,baseOpp:48.7,baseGames:5},
- next:null,games:[],bets:[],ledger:[],lines:{},slip:{mode:'single',legs:[],parlayStake:'',parlayOdds:''}};}
-function merge(o){var d=defaults();o=o||{};return {v:1,player:Object.assign({},d.player,o.player),settings:Object.assign({},d.settings,o.settings),
- next:o.next||null,games:o.games||[],bets:o.bets||[],ledger:o.ledger||[],lines:o.lines||{},slip:Object.assign({},d.slip,o.slip,{legs:(o.slip&&o.slip.legs)||[]})};}
-function load(){try{var raw=localStorage.getItem(KEY);if(raw)return merge(JSON.parse(raw));}catch(e){storageOK=false;}return defaults();}
+ next:null,games:[],bets:[],ledger:[],lines:{},slip:{mode:'single',legs:[],parlayStake:'',parlayOdds:''},
+ casino:{game:'menu',history:[],bj:{deck:[],player:[],dealer:[],stake:0,status:'idle',message:''},baccarat:{history:[]}}};}
+function merge(o){var d=defaults();o=o||{};return {v:1,recentImported:!!o.recentImported,player:Object.assign({},d.player,o.player),settings:Object.assign({},d.settings,o.settings),
+ next:o.next||null,games:o.games||[],bets:o.bets||[],ledger:o.ledger||[],lines:o.lines||{},slip:Object.assign({},d.slip,o.slip,{legs:(o.slip&&o.slip.legs)||[]}),
+ casino:Object.assign({},d.casino,o.casino,{history:(o.casino&&o.casino.history)||[],bj:Object.assign({},d.casino.bj,(o.casino&&o.casino.bj)||{}),baccarat:Object.assign({},d.casino.baccarat,(o.casino&&o.casino.baccarat)||{})})};}
+function importRecentGames(s){
+ if(s.recentImported||s.games.length)return;
+ var rows=[
+  ['2026-11-22','SA',23,1,1,5,1,10,20,0,5,2],
+  ['2026-11-20','NYK',27,2,2,1,1,10,20,3,8,1],
+  ['2026-11-17','CLE',20,1,5,4,0,7,18,0,5,3],
+  ['2026-11-15','OKC',17,0,5,3,0,7,20,2,8,0],
+  ['2026-11-13','ORL',23,0,3,0,1,9,16,1,2,2],
+  ['2026-11-12','CLE',30,2,3,0,0,13,18,3,4,2],
+  ['2026-11-10','CHA',20,0,2,2,2,8,12,2,4,2],
+  ['2026-11-08','DEN',20,2,1,3,0,8,23,2,9,3],
+  ['2026-11-06','UTA',10,3,4,2,0,4,13,0,2,1],
+  ['2026-11-04','PHX',15,4,5,5,0,7,10,0,1,0],
+  ['2026-11-02','POR',17,7,1,1,0,7,12,0,0,0]];
+ s.games=rows.map(function(r,i){
+  return {id:'recent-'+r[0],date:r[0],team:s.player.team,oppTeam:r[1],
+   my:[null,null,null,null],op:[null,null,null,null],ot:null,
+   stats:{pts:r[2],reb:r[3],ast:r[4],stl:r[5],blk:r[6],fgm:r[7],fga:r[8],tpm:r[9],tpa:r[10],fls:r[11]},created:Date.now()+i};
+ });
+ s.recentImported=true;
+}
+function load(){try{var raw=localStorage.getItem(KEY);if(raw){var s=merge(JSON.parse(raw));importRecentGames(s);return s;}}catch(e){storageOK=false;}var s=defaults();importRecentGames(s);return s;}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){storageOK=false;}}
 state=defaults();
 
@@ -259,11 +376,19 @@ function parseStake(s){var v=parseNum(s);if(v==null||v<=0)return null;v=r2(v);re
 function playerVal(g,k){var s=g.stats;if(!s)return null;if(k==='pra')return (s.pts==null||s.reb==null||s.ast==null)?null:s.pts+s.reb+s.ast;return s[k]==null?null:s[k];}
 function teamVal(g,side,scope){
  var idx=scope==='full'?null:parseInt(scope.slice(1),10)-1,ot=state.settings.includeOT&&g.ot;
- var my=idx==null?sum(g.my)+(ot?g.ot.my:0):g.my[idx];
- var op=idx==null?sum(g.op)+(ot?g.ot.op:0):g.op[idx];
- return side==='my'?my:side==='opp'?op:side==='game'?my+op:my-op;}
-function gscores(g){var myF=sum(g.my)+(g.ot?g.ot.my:0),opF=sum(g.op)+(g.ot?g.ot.op:0);return {myReg:sum(g.my),opReg:sum(g.op),myF:myF,opF:opF,win:myF>opF};}
-function history(mk){var rows=[];state.games.forEach(function(g){var v=mk.group==='player'?playerVal(g,mk.key):teamVal(g,mk.group,mk.key);if(v!=null)rows.push({v:v,opp:g.oppTeam});});return rows;}
+ var my=idx==null?sumKnown(g.my):g.my[idx];
+ var op=idx==null?sumKnown(g.op):g.op[idx];
+ if(idx==null&&ot){if(my!=null)my+=g.ot.my;if(op!=null)op+=g.ot.op;}
+ return side==='my'?my:side==='opp'?op:side==='game'?(my!=null&&op!=null?my+op:null):(my!=null&&op!=null?my-op:null);}
+function gscores(g){var myReg=sumKnown(g.my),opReg=sumKnown(g.op),myF=myReg==null?null:myReg+(g.ot?g.ot.my:0),opF=opReg==null?null:opReg+(g.ot?g.ot.op:0);
+ return {myReg:myReg,opReg:opReg,myF:myF,opF:opF,win:myF!=null&&opF!=null?myF>opF:null};}
+function history(mk){var rows=[];state.games.forEach(function(g){var v=null;
+ if(mk.group==='player')v=playerVal(g,mk.key);
+ else if(mk.group==='qwinner'){
+  if(mk.key==='sweep'){var wonAll=true;for(var i=0;i<4;i++){if(g.my[i]==null||g.op[i]==null){wonAll=null;break;}if(g.my[i]<=g.op[i])wonAll=false;}v=wonAll;}
+  else{var idx=parseInt(mk.key.slice(1),10)-1;if(g.my[idx]!=null&&g.op[idx]!=null)v=g.my[idx]-g.op[idx];}
+ }else v=teamVal(g,mk.group,mk.key);
+ if(v!=null)rows.push({v:v,opp:g.oppTeam});});return rows;}
 
 /* ---------- probability model ---------- */
 function erf(x){var s=x<0?-1:1,a=Math.abs(x),t=1/(1+0.3275911*a);
@@ -300,6 +425,7 @@ function modelFor(mk,opp){
 function effLine(mk,m){var ls=state.lines[mk.id];if(ls&&ls.manual)return ls.line==null?null:ls.line;return m.suggest;}
 function offer(mk,opp){
  var m=modelFor(mk,opp),L=effLine(mk,m),ls=state.lines[mk.id]||{},o={mk:mk,m:m,L:L,p:null,auto:null,over:null,under:null,ovrOver:false,ovrUnder:false,tier:m.tier};
+ if(mk.group==='qwinner'||mk.group==='matchwinner'){L=0;m.tier='model';o.L=L;o.auto=[-110,-110];o.over=decimalToAmerican(1.91);o.under=decimalToAmerican(1.91);o.p=null;}
  if(L==null)return o;
  if(m.mu==null){o.auto=[-110,-110];}
  else{var cdf=makeCdf(m.mu,m.sd,m.kind,m.v),T=mk.group==='spread'?-L:L;o.p=probs(cdf,T);o.auto=bookOdds(o.p,state.settings.margin);}
@@ -308,18 +434,30 @@ function offer(mk,opp){
  return o;}
 function mLabel(mk,myT,opT){
  if(mk.group==='player')return mk.label;
+ if(mk.group==='qwinner')return mk.label;
+ if(mk.group==='matchwinner')return 'Match winner';
  var sc=SCOPES.filter(function(s){return s[0]===mk.key;})[0][1];
  if(mk.group==='my')return myT+' '+sc+' total';
  if(mk.group==='opp')return (opT||'Opponent')+' '+sc+' total';
  if(mk.group==='game')return 'Game '+sc+' total';
  return sc+' handicap';}
 function legText(mk,side,L,myT,opT){
+ if(mk.group==='matchwinner'){
+  if(side==='my')return myT+' wins';
+  if(side==='opp')return (opT||'Opponent')+' wins';
+  return 'Game goes to overtime';
+ }
+ if(mk.group==='qwinner'){
+  if(mk.key==='sweep')return side==='over'?myT+' wins all quarters':'Opponent wins or splits quarters';
+  var period=mk.key.toUpperCase().replace('Q','Q');
+  return side==='over'?myT+' wins '+period:(opT||'Opponent')+' wins '+period;
+ }
  if(mk.group==='spread')return side==='over'?myT+' '+sgn(L):(opT||'Opp')+' '+sgn(-L);
  return (side==='over'?'Over ':'Under ')+L;}
 
 /* ---------- slip + bets ---------- */
 function legView(l){var mk=MK[l.marketId],o=offer(mk,state.next),ov=parseInt0(String(l.odds).replace(/^\+/,''));
- var neg=/^-\d+$/.test(String(l.odds).trim())?parseInt(l.odds,10):null,num=ov!=null?ov:neg;
+ var decimal=parseDecimalOdds(l.odds),num=decimal==null?(validOdds(ov)?ov:null):decimalToAmerican(decimal);
  var odds=validOdds(num)?num:(l.side==='over'?o.over:o.under);
  return {l:l,mk:mk,o:o,line:o.L,odds:odds,custom:validOdds(num),text:o.L==null?'—':legText(mk,l.side,o.L,state.player.team,state.next)};}
 function slipCombined(views){var d=views.reduce(function(p,v){return p*dec(v.odds);},1);return d;}
@@ -337,7 +475,7 @@ function placeBets(){
   if(vs.length<2){ui.slipErr='A parlay needs at least two selections.';return false;}
   var st=parseStake(sl.parlayStake);if(st==null){ui.slipErr='Enter a wager above 0.';return false;}
   if(st>bal){ui.slipErr='Wager exceeds your balance ('+ccFmt(bal)+').';return false;}
-  var po=parseInt(String(sl.parlayOdds).trim(),10),ovr=validOdds(po)&&/^[+-]?\d+$/.test(String(sl.parlayOdds).trim());
+  var pd=parseDecimalOdds(sl.parlayOdds),po=pd==null?null:decimalToAmerican(pd),ovr=validOdds(po);
   made.push(mkBet('parlay',st,vs,ovr?po:fromDec(slipCombined(vs)),ovr));
  }
  var now=new Date().toISOString();
@@ -348,8 +486,30 @@ function mkBet(type,stake,vs,odds,ovr){
   legs:vs.map(function(v){return {marketId:v.mk.id,label:mLabel(v.mk,state.player.team,state.next),side:v.l.side,line:v.line,odds:v.odds,text:v.text,status:'PENDING',actual:null};})};}
 
 /* ---------- settlement ---------- */
-function actualFor(leg,g){var p=leg.marketId.split(':');return p[0]==='player'?playerVal(g,p[1]):teamVal(g,p[0],p[1]);}
+function actualFor(leg,g){var p=leg.marketId.split(':');
+ if(p[0]==='player')return playerVal(g,p[1]);
+ if(p[0]==='matchwinner'){
+  if(g.ot)return 'ot';
+  var my=sumKnown(g.my),op=sumKnown(g.op);
+  if(my==null||op==null)return null;
+  if(my===op)return null;
+  return my>op?'my':'opp';
+ }
+ if(p[0]==='qwinner'){
+  if(p[1]==='sweep'){for(var i=0;i<4;i++){if(g.my[i]==null||g.op[i]==null)return null;}for(var j=0;j<4;j++){if(g.my[j]<=g.op[j])return 0;}return 1;}
+  var idx=parseInt(p[1].slice(1),10)-1;if(g.my[idx]==null||g.op[idx]==null)return null;return g.my[idx]-g.op[idx];
+ }
+ return teamVal(g,p[0],p[1]);}
 function legOutcome(leg,g){var a=actualFor(leg,g);if(a==null)return null;var diff;
+ if(leg.marketId.indexOf('matchwinner:')===0){
+  return {a:a,res:leg.side===a?'WIN':'LOSS'};
+ }
+ if(leg.marketId.indexOf('qwinner:')===0){
+  var side=leg.side,win=a>0,draw=a===0;
+  if(leg.marketId==='qwinner:sweep'){win=a===1;draw=false;}
+  if(draw)return {a:a,res:'PUSH'};
+  return {a:a,res:(side==='over')===win?'WIN':'LOSS'};
+ }
  if(leg.marketId.indexOf('spread:')===0){var v=a+leg.line;diff=leg.side==='over'?v:-v;}else diff=leg.side==='over'?a-leg.line:leg.line-a;
  return {a:a,res:diff>1e-9?'WIN':diff<-1e-9?'LOSS':'PUSH'};}
 function resolveBet(b){var L=b.legs;
@@ -419,9 +579,10 @@ function chart(title,labels,tips,series,opts){opts=opts||{};
 //LOGIC-END
 
 /* ---------- view builders ---------- */
-var TABS=[['dash','Dashboard'],['book','Sportsbook'],['record','Record game'],['bets','My bets'],['bank','Bankroll'],['teams','Matchups'],['setup','Setup']];
+var TABS=[['dash','Dashboard'],['book','Sportsbook'],['record','Record game'],['bets','My bets'],['bank','Bankroll'],['teams','Matchups'],['other','Others'],['setup','Setup']];
 function rawVal(key,fb){return ui.raw[key]!=null?ui.raw[key]:fb;}
 function teamOpts(sel,placeholder){return (placeholder?'<option value="">'+esc(placeholder)+'</option>':'')+TEAMS.map(function(t){return '<option value="'+t[1]+'"'+(sel===t[1]?' selected':'')+'>'+esc(t[0])+' ('+t[1]+')</option>';}).join('');}
+function teamLogo(abbr){return '<img class="team-logo" src="COURTSIDE-assets/nba/'+esc(abbr)+'.png" alt="'+esc(TEAM_NAME[abbr]||abbr)+' logo">';}
 function gameLabels(){return state.games.map(function(g,i){return 'G'+(i+1);});}
 function gameTips(){return state.games.map(function(g,i){return 'G'+(i+1)+' · '+fmtDate(g.date)+' vs '+g.oppTeam;});}
 
@@ -434,13 +595,13 @@ function banner(){var me=state.player.team,ms=state.next?matchupStats(state.next
  if(!state.next)h='Pick the opponent from your MyCAREER schedule to open the betting markets.';
  else if(ms&&ms.gp)h=ms.gp+' game'+(ms.gp>1?'s':'')+' vs '+state.next+' recorded · '+ms.w+'-'+ms.l+' · avg game total '+r1(ms.tot);
  else h='No games recorded vs '+state.next+' yet. Lines use your overall averages.';
- return '<section class="next"><div><span class="eyebrow">Next matchup</span><div class="vs"><span>'+esc(me)+'</span><i>vs</i><span>'+esc(state.next||'—')+'</span></div><p class="hist">'+esc(h)+'</p></div>'
+ return '<section class="next"><div><span class="eyebrow">Next matchup</span><div class="matchup-teams"><span class="team-lockup">'+teamLogo(me)+'<span class="team-code">'+esc(me)+'</span></span><i>vs</i><span class="team-lockup">'+(state.next?teamLogo(state.next):'<span class="team-logo"></span>')+'<span class="team-code">'+esc(state.next||'—')+'</span></span></div><p class="hist">'+esc(h)+'</p></div>'
  +'<div class="next-r"><label for="next-opp">Opponent</label><select id="next-opp" data-bind="next">'+teamOpts(state.next,'Select opponent…')+'</select></div></section>';}
 
 function playerCard(){var p=state.player,S=state.settings,ini=p.name.split(/\s+/).map(function(w){return w[0]||'';}).join('').slice(0,2).toUpperCase();
  var chips=[p.pos&&'<span class="chip">Pos <b>'+esc(p.pos)+'</b></span>',p.ovr&&'<span class="chip">OVR <b>'+esc(p.ovr)+'</b></span>',p.height&&'<span class="chip">HT <b>'+esc(p.height)+'</b></span>',p.build&&'<span class="chip">Build <b>'+esc(p.build)+'</b></span>',
   '<span class="chip">4 × 4:00 quarters</span>'].filter(Boolean).join('');
- return '<section class="card sec"><div class="pcard"><div class="avatar">'+esc(ini)+'</div><div><span class="eyebrow">MyCAREER player</span><h3>'+esc(p.name)+'</h3><div class="muted">'+esc(TEAM_NAME[p.team]||p.team)+'</div></div></div><div class="chips">'+chips+'</div>'
+ return '<section class="card sec"><div class="pcard"><div class="avatar"><img src="COURTSIDE-my-player.png" alt="'+esc(p.name)+'"></div><div><span class="eyebrow">MyCAREER player</span><h3>'+esc(p.name)+'</h3><div class="muted">'+esc(TEAM_NAME[p.team]||p.team)+'</div></div></div><div class="chips">'+chips+'</div>'
  +'<div class="kv"><div><span>Team PPG baseline</span><b>'+r1(S.baseMy)+'</b></div><div><span>Opp PPG baseline</span><b>'+r1(S.baseOpp)+'</b></div><div><span>Game total baseline</span><b>'+r1(S.baseMy+S.baseOpp)+'</b></div></div></section>';}
 
 function bankSummary(){var s=betStats(),b=balance();
@@ -470,57 +631,74 @@ function chartsSection(){var gs=state.games,lb=gameLabels(),tp=gameTips(),f1=fun
  +chart('Bankroll',lr.map(function(e,i){return String(i+1);}),lr.map(function(e,i){return fmtTime(e.t);}),[{name:'Balance',vals:bl,fmt:function(v){return ccFmt(v);}}],{ref:state.settings.start,empty:'Place a bet to start the bankroll line.'})
  +'</div></section>';}
 
-function resultPill(g){var s=gscores(g);return '<span class="pill '+(s.win?'win':'loss')+'">'+(s.win?'W':'L')+'</span>';}
+function resultPill(g){var s=gscores(g);if(s.win==null)return '<span class="pill pend">—</span>';return '<span class="pill '+(s.win?'win':'loss')+'">'+(s.win?'W':'L')+'</span>';}
 function recentGames(){var gs=state.games.slice().reverse().slice(0,6);
  return '<section class="sec"><header><h2>Recent games</h2></header>'+(gs.length?'<div class="card scroll"><table><thead><tr><th>Date</th><th>Opp</th><th>Score</th><th class="n">PRA</th><th class="n">Total</th><th></th></tr></thead><tbody>'
- +gs.map(function(g){var s=gscores(g),pr=playerVal(g,'pra');return '<tr><td>'+fmtDate(g.date)+'</td><td>'+esc(g.oppTeam)+'</td><td>'+resultPill(g)+' '+s.myF+'–'+s.opF+(g.ot?' <span class="tag">OT</span>':'')+'</td><td class="n">'+(pr==null?'—':pr)+'</td><td class="n">'+(s.myF+s.opF)+'</td><td><button class="btn ghost sm" data-act="editGame" data-id="'+g.id+'">Edit</button></td></tr>';}).join('')
+ +gs.map(function(g){var s=gscores(g),pr=playerVal(g,'pra'),score=s.myF==null||s.opF==null?'—':s.myF+'–'+s.opF,total=s.myF==null||s.opF==null?'—':s.myF+s.opF;return '<tr><td>'+fmtDate(g.date)+'</td><td>'+esc(g.oppTeam)+'</td><td>'+resultPill(g)+' '+score+(g.ot?' <span class="tag">OT</span>':'')+'</td><td class="n">'+(pr==null?'—':pr)+'</td><td class="n">'+total+'</td><td><button class="btn ghost sm" data-act="editGame" data-id="'+g.id+'">Edit</button></td></tr>';}).join('')
  +'</tbody></table></div>':'<p class="empty">No games yet. <button class="linkbtn" data-go="record">Record your first game</button></p>')+'</section>';}
 function betCard(b){var st=b.status,pill='<span class="pill '+(st==='WIN'?'win':st==='LOSS'?'loss':st==='PUSH'?'push':'pend')+'">'+(st==='PENDING'?'Pending':st)+'</span>';
- var d=dec(b.odds),pot=r2(b.stake*d),legs=b.legs.map(function(l){var lp=l.status==='PENDING'?'<span class="pill pend">Pending</span>':'<span class="pill '+(l.status==='WIN'?'win':l.status==='LOSS'?'loss':'push')+'">'+l.status+'</span>';
-  return '<li><span>'+esc(l.label)+' · <b>'+esc(l.text)+'</b> <span class="muted">('+am(l.odds)+')</span></span><span>'+(l.actual!=null?'<span class="muted">actual '+l.actual+'</span> ':'')+lp+'</span></li>';}).join('');
- return '<article class="bet"><div class="h"><div class="row"><b>'+(b.type==='parlay'?'Parlay · '+b.legs.length+' legs':'Single')+'</b><span class="muted">'+esc(b.team)+' vs '+esc(b.oppTeam)+'</span></div>'+pill+'</div><ul>'+legs+'</ul>'
- +'<div class="f"><span>Wager '+ccFmt(b.stake)+'</span><span>Odds '+am(b.odds)+(b.settledOdds&&b.settledOdds!==b.odds?' → '+am(b.settledOdds)+' after push':'')+'</span>'
- +(st==='PENDING'?'<span>To return '+ccFmt(pot)+'</span>':'<span class="'+(b.profit>0?'pos':b.profit<0?'neg':'')+'">'+(st==='WIN'?'Profit ':st==='LOSS'?'Loss ':'')+ccS(b.profit)+'</span><span>Returned '+ccFmt(b.payout)+'</span>')
- +'<span>'+fmtTime(b.placedAt)+'</span></div></article>';}
+ var d=dec(b.odds),pot=r2(b.stake*d),legs=b.legs.map(function(l){var result=l.status==='PENDING'?'OPEN':l.status;
+  return '<li><span class="bet-leg-main">'+esc(l.label)+' · <b>'+esc(l.text)+'</b><span class="bet-leg-result">'+esc(result)+(l.actual!=null?' · '+l.actual:'')+'</span></span><span class="bet-leg-odds">'+am(l.odds)+'</span></li>';}).join('');
+ var title=b.type==='parlay'?'COMBO':'SINGLE';
+ var statusClass=st==='WIN'?'win':st==='LOSS'?'loss':st==='PUSH'?'push':'pend';
+ var footerRight=st==='PENDING'?ccFmt(pot):ccFmt(b.payout);
+ var footerLabel=st==='PENDING'?'POTENTIAL RETURN':(st==='LOSS'?'RETURNED':st==='PUSH'?'PUSH RETURN':'RETURNED');
+ return '<article class="bet" tabindex="0" aria-label="'+esc(title)+' bet '+esc(st==='PENDING'?'open':st)+'"><div class="h"><div><span class="bet-title">'+title+'</span><span class="bet-date">'+fmtTime(b.placedAt)+'</span></div><span class="bet-status '+statusClass+'">'+esc(st==='PENDING'?'OPEN':st)+'</span></div>'
+ +'<span class="bet-type">'+esc(b.team)+' vs '+esc(b.oppTeam)+'</span><div class="bet-rule"></div><ul>'+legs+'</ul>'
+ +'<div class="f"><span>Combined odds</span><span class="right">'+am(b.odds)+(b.settledOdds&&b.settledOdds!==b.odds?' / '+am(b.settledOdds):'')+'</span>'
+ +'<span>Stake</span><span class="right">'+ccFmt(b.stake)+'</span>'
+ +'<span>'+footerLabel+'</span><span class="right">'+footerRight+'</span></div></article>';}
 function openBets(){var p=state.bets.filter(function(b){return b.status==='PENDING';}).slice().reverse();
- return '<section class="sec"><header><h2>Open bets</h2><span class="muted small">'+p.length+' unsettled</span></header>'+(p.length?'<div class="card">'+p.slice(0,5).map(betCard).join('')+(p.length>5?'<p class="muted small" style="padding-top:.6rem">+ '+(p.length-5)+' more in My bets</p>':'')+'</div>':'<p class="empty">No open bets. <button class="linkbtn" data-go="book">Open the sportsbook</button></p>')+'</section>';}
+ return '<section class="sec"><header><h2>Open bets</h2><span class="muted small">'+p.length+' unsettled</span></header>'+(p.length?'<div class="bet-list">'+p.slice(0,5).map(betCard).join('')+(p.length>5?'<p class="muted small" style="padding-top:.6rem">+ '+(p.length-5)+' more in My bets</p>':'')+'</div>':'<p class="empty">No open bets. <button class="linkbtn" data-go="book">Open the sportsbook</button></p>')+'</section>';}
 function viewDash(){return banner()+'<div class="grid2">'+playerCard()+bankSummary()+'</div>'+seasonSection()+chartsSection()+'<div class="grid2">'+recentGames()+openBets()+'</div>';}
 
 /* ----- sportsbook ----- */
 function marketRow(mk){
  var o=offer(mk,state.next),ls=state.lines[mk.id]||{},me=state.player.team,op=state.next,leg=state.slip.legs.filter(function(l){return l.marketId===mk.id;})[0],isSp=mk.group==='spread',m=o.m;
+ var isWinner=mk.group==='qwinner';
+ var isMatch=mk.group==='matchwinner';
  var manual=!!ls.manual,anyOvr=o.ovrOver||o.ovrUnder,lineVal=manual?(ls.raw!=null?ls.raw:''):(o.L==null?'':String(o.L)),dis=!state.next||o.L==null;
  var tierTag={none:'<span class="tag warn">No data · placeholder odds</span>',prov:'<span class="tag warn">Provisional</span>',ltd:'<span class="tag">Limited data</span>',model:'<span class="tag ok">Model</span>'}[o.tier];
  if(o.L==null&&mk.quarter&&m.n<3)tierTag='<span class="tag warn">Needs 3+ games for a suggested line</span>';
  var tags='<div class="tags">'+(o.L!=null?tierTag:'')+(manual?'<span class="tag man">Custom line</span>':'')+(anyOvr?'<span class="tag man">Custom odds</span>':'')+'</div>';
- var lOver=isSp?esc(me)+' '+(o.L==null?'':sgn(o.L)):'Over',lUnder=isSp?esc(op||'Opp')+' '+(o.L==null?'':sgn(-o.L)):'Under';
- var btn=function(side,lab,odds){return '<button class="odd'+(leg&&leg.side===side?' on':'')+'" data-act="pick" data-id="'+mk.id+'" data-side="'+side+'"'+(dis?' disabled':'')+'><span>'+lab+(!isSp&&o.L!=null?' '+o.L:'')+'</span><b>'+(dis?'—':am(odds))+'</b></button>';};
+ var lOver=isWinner?(mk.key==='sweep'?esc(me)+' wins all':esc(me)):(isSp?esc(me)+' '+(o.L==null?'':sgn(o.L)):'Over');
+ var lUnder=isWinner?(mk.key==='sweep'?'Opponent / split':esc(op||'Opponent')):(isSp?esc(op||'Opp')+' '+(o.L==null?'':sgn(-o.L)):'Under');
+ var btn=function(side,lab,odds){return '<button class="odd'+(leg&&leg.side===side?' on':'')+'" data-act="pick" data-id="'+mk.id+'" data-side="'+side+'"'+(dis?' disabled':'')+'><span>'+lab+(!isSp&&!isWinner&&o.L!=null?' '+o.L:'')+'</span><b>'+(dis?'—':am(odds))+'</b></button>';};
  var info='';
- if(o.L==null)info='<span>Enter a line to see odds'+(mk.quarter?'. Quarter lines need 3+ recorded games before one is suggested.':'.')+'</span>';
+ if(isWinner)info='<span>Winner market · 1.91 each way</span><span>Settles from the recorded quarter scores. Missing scores stay pending.</span>';
+ else if(o.L==null)info='<span>Enter a line to see odds'+(mk.quarter?'. Quarter lines need 3+ recorded games before one is suggested.':'.')+'</span>';
  else if(o.p){var a=isSp?me:'Over',b2=isSp?(op||'Opp'):'Under';info='<span>'+a+' '+pct(o.p.over)+' · '+b2+' '+pct(o.p.under)+(o.p.push>0.001?' · Push '+pct(o.p.push):'')+'</span><span>μ '+r1(m.mu)+' · σ '+r1(m.sd)+' · '+m.n+' game'+(m.n===1?'':'s')+(m.no?' ('+m.no+' vs '+esc(op)+')':'')+'</span>';}
  else info='<span>No recorded stats for this market yet. Odds are a flat placeholder, not an estimate.</span>';
  var ed=ui.oddsEdit[mk.id],ovr=ls.ovrRaw||{};
  info+='<span><button class="linkbtn" data-act="oddsEdit" data-id="'+mk.id+'">'+(ed?'Hide odds editor':'Edit odds')+'</button>'+((manual||anyOvr)?' · <button class="linkbtn" data-act="auto" data-id="'+mk.id+'">Back to automatic</button>':'')+'</span>';
- var oe=ed?'<div class="oe"><div class="field"><label for="oo-'+mk.id+'">'+esc(isSp?me:'Over')+' odds</label><input type="text" id="oo-'+mk.id+'" inputmode="numeric" data-bind="ovr" data-id="'+mk.id+'" data-side="over" placeholder="'+(o.auto?am(o.auto[0]):'-110')+'" value="'+esc(ovr.over||'')+'"></div>'
-  +'<div class="field"><label for="ou-'+mk.id+'">'+esc(isSp?(op||'Opp'):'Under')+' odds</label><input type="text" id="ou-'+mk.id+'" inputmode="numeric" data-bind="ovr" data-id="'+mk.id+'" data-side="under" placeholder="'+(o.auto?am(o.auto[1]):'-110')+'" value="'+esc(ovr.under||'')+'"></div><span class="muted small" style="align-self:end">American odds, e.g. -120 or +150</span></div>':'';
+ var oe=ed?'<div class="oe"><div class="field"><label for="oo-'+mk.id+'">'+esc(isSp?me:'Over')+' odds</label><input type="text" id="oo-'+mk.id+'" inputmode="decimal" data-bind="ovr" data-id="'+mk.id+'" data-side="over" placeholder="'+(o.auto?am(o.auto[0]):'1.91')+'" value="'+esc(ovr.over||'')+'"></div>'
+  +'<div class="field"><label for="ou-'+mk.id+'">'+esc(isSp?(op||'Opp'):'Under')+' odds</label><input type="text" id="ou-'+mk.id+'" inputmode="decimal" data-bind="ovr" data-id="'+mk.id+'" data-side="under" placeholder="'+(o.auto?am(o.auto[1]):'1.91')+'" value="'+esc(ovr.under||'')+'"></div><span class="muted small" style="align-self:end">Decimal odds, e.g. 1.91 or 2.50</span></div>':'';
+ if(isMatch){
+  var matchBtn=function(side,lab){return '<button class="odd'+(leg&&leg.side===side?' on':'')+'" data-act="pick" data-id="'+mk.id+'" data-side="'+side+'"'+(dis?' disabled':'')+'><span>'+lab+'</span><b>'+(dis?'—':'1.91')+'</b></button>';};
+  return '<div class="mrow matchrow"><div class="mname"><span>Match winner</span><div class="tags"><span class="tag ok">Three-way</span></div></div>'
+   +matchBtn('my',esc(me))+matchBtn('opp',esc(op||'Opponent'))+matchBtn('ot','X · Overtime')
+   +'<div class="minfo"><span>Choose a team to win, or X if the game goes to overtime.</span></div></div>';
+ }
  return '<div class="mrow"><div class="mname"><span>'+esc(mLabel(mk,me,op))+'</span>'+tags+'</div>'
- +'<div class="lc"><button data-act="step" data-id="'+mk.id+'" data-d="-0.5" aria-label="Lower line">−</button><input type="text" inputmode="decimal" id="ln-'+mk.id+'" data-bind="line" data-id="'+mk.id+'" value="'+esc(lineVal)+'" placeholder="line" aria-label="Line"><button data-act="step" data-id="'+mk.id+'" data-d="0.5" aria-label="Raise line">+</button></div>'
+ +(isWinner?'':'<div class="lc"><button data-act="step" data-id="'+mk.id+'" data-d="-0.5" aria-label="Lower line">−</button><input type="text" inputmode="decimal" id="ln-'+mk.id+'" data-bind="line" data-id="'+mk.id+'" value="'+esc(lineVal)+'" placeholder="line" aria-label="Line"><button data-act="step" data-id="'+mk.id+'" data-d="0.5" aria-label="Raise line">+</button></div>')
  +btn('over',lOver,o.over)+btn('under',lUnder,o.under)+'<div class="minfo">'+info+'</div>'+oe+'</div>';}
-function group(title,note,rows){return '<section class="mgroup"><header><h3>'+title+'</h3>'+(note?'<p>'+note+'</p>':'')+'</header>'+rows.map(marketRow).join('')+'</section>';}
+function group(key,title,note,rows){
+ var open=ui.marketOpen[key]!==false;
+ return '<section class="mgroup'+(open?'':' closed')+'"><header data-act="toggleMarket" data-market="'+key+'" role="button" tabindex="0" aria-expanded="'+open+'"><div class="mgroup-title"><h3>'+title+'</h3><p>'+esc(note||'')+'</p></div><span class="mgroup-toggle">'+(open?'−':'+')+'</span></header><div class="mgroup-body">'+rows.map(marketRow).join('')+'</div></section>';}
 function slipHtml(){var sl=state.slip,vs=sl.legs.map(legView),me=state.player.team,bal=balance(),single=sl.mode==='single';
  var body='';
  if(!vs.length)body='<p class="empty">Pick Over, Under or a handicap side from any market to build a bet.</p>';
  else body=vs.map(function(v,i){var l=v.l,st=parseStake(l.stake),d=dec(v.odds||-110);
   return '<div class="leg"><div class="t"><div><div class="muted small">'+esc(me)+' vs '+esc(state.next||'—')+'</div><b>'+esc(mLabel(v.mk,me,state.next))+'</b><div>'+esc(v.text)+' <span class="tag">Not placed</span></div></div><button class="x" data-act="removeLeg" data-id="'+l.id+'" aria-label="Remove selection">×</button></div>'
-  +'<div class="f"><div class="field"><label for="lo-'+l.id+'">Odds'+(v.custom?' (custom)':'')+'</label><input type="text" id="lo-'+l.id+'" inputmode="numeric" data-bind="legOdds" data-id="'+l.id+'" value="'+esc(l.odds||'')+'" placeholder="'+am(v.odds)+'"></div>'
+  +'<div class="f"><div class="field"><label for="lo-'+l.id+'">Odds'+(v.custom?' (custom)':'')+'</label><input type="text" id="lo-'+l.id+'" inputmode="decimal" data-bind="legOdds" data-id="'+l.id+'" value="'+esc(l.odds||'')+'" placeholder="'+am(v.odds)+'"></div>'
   +(single?'<div class="field"><label for="ls-'+l.id+'">Wager (CC)</label><input type="text" id="ls-'+l.id+'" inputmode="decimal" data-bind="legStake" data-id="'+l.id+'" value="'+esc(l.stake||'')+'" placeholder="0"></div>':'<div></div>')+'</div>'
   +(single&&st?'<div class="muted small">To return '+ccFmt(st*d)+' · profit '+ccFmt(st*(d-1))+'</div>':'')+'</div>';}).join('');
  var foot='';
  if(vs.length){
   if(single){var sts=sl.legs.map(function(l){return parseStake(l.stake);}),tot=sum(sts.map(function(x){return x||0;})),pay=sum(sts.map(function(s,i){return s?s*dec(vs[i].odds||-110):0;}));
    foot='<div class="sum"><div><span class="muted">Total wager</span><b>'+ccFmt(tot)+'</b></div><div><span class="muted">Potential payout</span><b>'+ccFmt(pay)+'</b></div><div><span class="muted">Potential profit</span><b class="pos">'+ccFmt(pay-tot)+'</b></div></div>';}
-  else{var d=slipCombined(vs),po=parseInt(String(sl.parlayOdds).trim(),10),ovr=validOdds(po)&&/^[+-]?\d+$/.test(String(sl.parlayOdds).trim()),eo=ovr?po:fromDec(d),stk=parseStake(sl.parlayStake)||0,dd=dec(eo);
-   foot='<div class="sum"><div class="field"><label for="p-odds">Parlay odds (calculated '+am(fromDec(d))+')'+(ovr?' · custom':'')+'</label><input type="text" id="p-odds" inputmode="numeric" data-bind="parlayOdds" value="'+esc(sl.parlayOdds)+'" placeholder="'+am(fromDec(d))+'"></div>'
+  else{var d=slipCombined(vs),pd=parseDecimalOdds(sl.parlayOdds),po=pd==null?null:decimalToAmerican(pd),ovr=validOdds(po),eo=ovr?po:fromDec(d),stk=parseStake(sl.parlayStake)||0,dd=dec(eo);
+   foot='<div class="sum"><div class="field"><label for="p-odds">Parlay odds (calculated '+am(fromDec(d))+')'+(ovr?' · custom':'')+'</label><input type="text" id="p-odds" inputmode="decimal" data-bind="parlayOdds" value="'+esc(sl.parlayOdds)+'" placeholder="'+am(fromDec(d))+'"></div>'
    +'<div class="field"><label for="p-stake">Wager (CC)</label><input type="text" id="p-stake" inputmode="decimal" data-bind="parlayStake" value="'+esc(sl.parlayStake)+'" placeholder="0"></div>'
    +'<div><span class="muted">Potential payout</span> <b style="float:right">'+ccFmt(stk*dd)+'</b></div><div><span class="muted">Potential profit</span> <b class="pos" style="float:right">'+ccFmt(stk*(dd-1))+'</b></div>'+(vs.length<2?'<p class="muted small">Add at least two selections.</p>':'')+'</div>';}
  }
@@ -529,33 +707,35 @@ function slipHtml(){var sl=state.slip,vs=sl.legs.map(legView),me=state.player.te
  +body+foot+(ui.slipErr?'<p class="err">'+esc(ui.slipErr)+'</p>':'')
  +(vs.length?'<div class="row"><button class="btn" data-act="place" style="flex:1">Place '+(single?(vs.length>1?vs.length+' bets':'bet'):'parlay')+'</button><button class="btn ghost" data-act="clearSlip">Clear slip</button></div><p class="muted small">Placing a bet locks its line and odds and reserves the wager from your balance.</p>':'')+'</aside>';}
 function viewBook(){var me=state.player.team,op=state.next||'Opponent';
- var P=MARKETS.filter(function(m){return m.group==='player';}),G=function(g){return MARKETS.filter(function(m){return m.group===g;});};
+ var P=MARKETS.filter(function(m){return m.group==='player';}),G=function(g){return MARKETS.filter(function(m){return m.group===g;});},Q=MARKETS.filter(function(m){return m.group==='qwinner';}),M=MARKETS.filter(function(m){return m.group==='matchwinner';});
+ var totals=G('my').concat(G('opp'),G('game'));
  return banner()+(state.next?'':'<p class="banner">Select an opponent above. Bets stay locked until a matchup is chosen.</p>')
  +'<div class="book"><div class="markets">'
- +group('Player props · '+esc(state.player.name),'PRA, PTS, REB, AST, STLS, BLK, FLS and shooting. FG and 3PTS bet on made shots; attempts are separate markets.',P)
- +group(esc(me)+' team totals','Full game and each 4-minute quarter.',G('my'))
- +group(esc(op)+' team totals','Full game and each 4-minute quarter.',G('opp'))
- +group('Game totals','Combined score of both teams.',G('game'))
- +group('Handicap · '+esc(me),'The line applies to '+esc(me)+'. '+esc(me)+' −5.5 needs a win by 6 or more; '+esc(op)+' +5.5 wins if '+esc(op)+' loses by 5 or fewer.',G('spread'))
+ +group('match','Match winner','Choose a team to win or X if the game goes to overtime.',M)
+ +group('handicap','Handicap · '+esc(me),'The line applies to '+esc(me)+'. '+esc(me)+' −5.5 needs a win by 6 or more; '+esc(op)+' +5.5 wins if '+esc(op)+' loses by 5 or fewer.',G('spread'))
+ +group('totals','Totals','Full-game and quarter totals for '+esc(me)+', '+esc(op)+', and the combined score.',totals)
+ +group('quarters','Quarter winners','Who wins each quarter, or wins all four quarters.',Q)
+ +group('props','Player props · '+esc(state.player.name),'PRA, PTS, REB, AST, STLS, BLK, FLS and shooting. FG and 3PTS bet on made shots; attempts are separate markets.',P)
  +'</div>'+slipHtml()+'</div>'
  +(state.slip.legs.length?'<button class="slipbar" data-act="toSlip"><span>Bet slip · '+state.slip.legs.length+' selection'+(state.slip.legs.length>1?'s':'')+'</span><span>View ▸</span></button>':'');}
 
 /* ----- record game ----- */
 function newForm(g){
- if(g)return {editId:g.id,date:g.date,team:g.team,opp:g.oppTeam,my:g.my.map(String),op:g.op.map(String),otOn:!!g.ot,otMy:g.ot?String(g.ot.my):'',otOp:g.ot?String(g.ot.op):'',
+ if(g)return {editId:g.id,date:g.date,team:g.team,opp:g.oppTeam,my:g.my.map(function(x){return x==null?'':String(x);}),op:g.op.map(function(x){return x==null?'':String(x);}),otOn:!!g.ot,otMy:g.ot?String(g.ot.my):'',otOp:g.ot?String(g.ot.op):'',
   st:{pts:'',reb:'',ast:'',stl:'',blk:'',fgm:'',fga:'',tpm:'',tpa:'',fls:''},settle:true,_g:g};
  return {editId:null,date:todayStr(),team:state.player.team,opp:state.next||'',my:['','','',''],op:['','','',''],otOn:false,otMy:'',otOp:'',st:{pts:'',reb:'',ast:'',stl:'',blk:'',fgm:'',fga:'',tpm:'',tpa:'',fls:''},settle:true};}
 function fillStats(f,g){if(g&&g.stats){Object.keys(f.st).forEach(function(k){f.st[k]=g.stats[k]==null?'':String(g.stats[k]);});}}
-function formCalc(f){var my=f.my.map(parseInt0),op=f.op.map(parseInt0),ok=my.concat(op).every(function(x){return x!=null;}),r={ok:ok,my:my,op:op};
- if(ok){var ot=null;if(f.otOn){var a=parseInt0(f.otMy),b=parseInt0(f.otOp);if(a!=null&&b!=null)ot={my:a,op:b};}
-  r.ot=ot;r.myReg=sum(my);r.opReg=sum(op);r.myF=r.myReg+(ot?ot.my:0);r.opF=r.opReg+(ot?ot.op:0);}return r;}
+function formCalc(f){var my=f.my.map(parseInt0),op=f.op.map(parseInt0),r={ok:my.concat(op).every(function(x){return x!=null;}),my:my,op:op};
+ var myReg=sumKnown(my),opReg=sumKnown(op),ot=null;
+ if(f.otOn){var a=parseInt0(f.otMy),b=parseInt0(f.otOp);if(a!=null&&b!=null)ot={my:a,op:b};}
+ r.ot=ot;r.myReg=myReg;r.opReg=opReg;r.myF=myReg==null?null:myReg+(ot?ot.my:0);r.opF=opReg==null?null:opReg+(ot?ot.op:0);return r;}
 function viewRecord(){
  if(!ui.form)ui.form=newForm();var f=ui.form,c=formCalc(f),me=f.team,opp=f.opp||'Opp',edit=!!f.editId;
  var qrow=function(i){var a=c.my[i],b=c.op[i];return '<tr><th scope="row">Q'+(i+1)+'</th><td><input type="text" inputmode="numeric" id="q-my-'+i+'" data-bind="fq" data-side="my" data-i="'+i+'" value="'+esc(f.my[i])+'" aria-label="'+esc(me)+' Q'+(i+1)+'"></td><td><input type="text" inputmode="numeric" id="q-op-'+i+'" data-bind="fq" data-side="op" data-i="'+i+'" value="'+esc(f.op[i])+'" aria-label="'+esc(opp)+' Q'+(i+1)+'"></td><td class="n">'+(a!=null&&b!=null?a+b:'—')+'</td></tr>';};
  var res='';
- if(c.ok){var tie=c.myF===c.opF;res='<div class="resbar"><span class="pill '+(tie?'push':c.myF>c.opF?'win':'loss')+'">'+(tie?'Tied':c.myF>c.opF?'Win':'Loss')+'</span><b class="big" style="font-size:1.8rem">'+me+' '+c.myF+' – '+c.opF+' '+esc(opp)+'</b></div>'
+ if(c.myF!=null&&c.opF!=null){var tie=c.myF===c.opF;res='<div class="resbar"><span class="pill '+(tie?'push':c.myF>c.opF?'win':'loss')+'">'+(tie?'Tied':c.myF>c.opF?'Win':'Loss')+'</span><b class="big" style="font-size:1.8rem">'+me+' '+c.myF+' – '+c.opF+' '+esc(opp)+'</b></div>'
   +'<p class="muted small">Betting totals use regulation'+(state.settings.includeOT?' plus overtime (your Setup option)':' only; overtime is kept separate')+': '+me+' '+(c.myReg+(state.settings.includeOT&&c.ot?c.ot.my:0))+', '+esc(opp)+' '+(c.opReg+(state.settings.includeOT&&c.ot?c.ot.op:0))+', combined '+(c.myReg+c.opReg+(state.settings.includeOT&&c.ot?c.ot.my+c.ot.op:0))+'.</p>';}
- else res='<p class="muted small">Enter all eight quarter scores to see the final score and result.</p>';
+ else res='<p class="muted small">Quarter scores are optional. Add the ones you know to see quarter totals and a final result.</p>';
  var S=f.st,pts=parseInt0(S.pts),reb=parseInt0(S.reb),ast=parseInt0(S.ast),fgm=parseInt0(S.fgm),fga=parseInt0(S.fga),tpm=parseInt0(S.tpm),tpa=parseInt0(S.tpa);
  var sf=function(k,l){return '<div class="field"><label for="s-'+k+'">'+l+'</label><input type="text" inputmode="numeric" id="s-'+k+'" data-bind="fstat" data-k="'+k+'" value="'+esc(S[k])+'"></div>';};
  var pair=function(a,b,l){return '<div class="field"><label>'+l+' (made – attempted)</label><div class="pair"><input type="text" inputmode="numeric" id="s-'+a+'" aria-label="'+l+' made" data-bind="fstat" data-k="'+a+'" value="'+esc(S[a])+'"><span>–</span><input type="text" inputmode="numeric" id="s-'+b+'" aria-label="'+l+' attempted" data-bind="fstat" data-k="'+b+'" value="'+esc(S[b])+'"></div></div>';};
@@ -580,7 +760,7 @@ function viewRecord(){
 /* ----- bets / bankroll ----- */
 function viewBets(){var f=ui.betsFilter,bs=state.bets.slice().reverse().filter(function(b){return f==='all'||(f==='pending'?b.status==='PENDING':b.status!=='PENDING');});
  return '<section class="sec"><header><h2>My bets</h2><div class="seg" style="width:min(100%,320px)" role="group">'+[['all','All'],['pending','Open'],['settled','Settled']].map(function(x){return '<button data-act="betsFilter" data-f="'+x[0]+'" aria-pressed="'+(f===x[0])+'">'+x[1]+'</button>';}).join('').replace('grid','')+'</div></header>'
- +(bs.length?'<div class="card">'+bs.map(betCard).join('')+'</div>':'<p class="empty">Nothing here yet.</p>')+'</section>';}
+ +(bs.length?'<div class="bet-list">'+bs.map(betCard).join('')+'</div>':'<p class="empty">Nothing here yet.</p>')+'</section>';}
 function viewBank(){var s=betStats(),b=balance(),rows=ledgerRows().reverse(),f=ui.ledFilter;
  rows=rows.filter(function(e){return f==='all'||(f==='place'?e.kind==='PLACE':e.kind!=='PLACE');});
  var lr=ledgerRows();
@@ -594,19 +774,50 @@ function viewBank(){var s=betStats(),b=balance(),rows=ledgerRows().reverse(),f=u
  +(rows.length?'<div class="card scroll"><table><thead><tr><th>Date</th><th>Matchup</th><th>Bet</th><th class="n">Wager</th><th class="n">Odds</th><th>Result</th><th class="n">Profit / loss</th><th class="n">Balance</th></tr></thead><tbody>'
  +rows.map(function(e){var bt=state.bets.filter(function(x){return x.id===e.betId;})[0];
   if(e.kind==='RESET')return '<tr><td>'+fmtTime(e.t)+'</td><td colspan="5" class="muted">Bankroll reset</td><td class="n">'+ccS(e.delta)+'</td><td class="n">'+ccFmt(e.bal)+'</td></tr>';
+  if(e.kind==='CASINO')return '<tr><td>'+fmtTime(e.t)+'</td><td>'+esc(e.game||'Casino')+'</td><td>Casino wager / payout</td><td class="n">—</td><td class="n">—</td><td><span class="pill '+(e.res==='WIN'?'win':e.res==='LOSS'?'loss':e.res==='PUSH'?'push':'pend')+'">'+esc(e.res||'PENDING')+'</span></td><td class="n '+(e.delta>0?'pos':e.delta<0?'neg':'')+'">'+ccS(e.delta)+'</td><td class="n">'+ccFmt(e.bal)+'</td></tr>';
   if(!bt)return '';var pend=e.kind==='PLACE',st=pend?'PENDING':e.res;
   return '<tr><td>'+fmtTime(e.t)+'</td><td>'+esc(bt.team)+' vs '+esc(bt.oppTeam)+'</td><td>'+(bt.type==='parlay'?'Parlay ('+bt.legs.length+')':esc(bt.legs[0].label+' '+bt.legs[0].text))+'</td><td class="n">'+ccFmt(bt.stake)+'</td><td class="n">'+am(bt.odds)+'</td><td><span class="pill '+(st==='WIN'?'win':st==='LOSS'?'loss':st==='PUSH'?'push':'pend')+'">'+(pend?'Pending':st)+'</span></td><td class="n '+(pend?'':(bt.profit>0?'pos':bt.profit<0?'neg':''))+'">'+(pend?'—':ccS(bt.profit))+'</td><td class="n">'+ccFmt(e.bal)+'</td></tr>';}).join('')
  +'</tbody></table></div>':'<p class="empty">No transactions yet.</p>')+'</section></section>';}
 
 /* ----- matchups ----- */
 function viewTeams(){var sel=ui.mt||state.next||null;
- var rows=TEAMS.map(function(t){var m=matchupStats(t[1]);return '<tr class="click'+(sel===t[1]?' sel':'')+'" data-act="mtSel" data-t="'+t[1]+'"><td><b>'+t[1]+'</b> <span class="muted">'+esc(t[0])+'</span>'+(state.next===t[1]?' <span class="tag man">Next</span>':'')+'</td><td class="n">'+m.gp+'</td><td class="n">'+(m.gp?m.w+'-'+m.l:'—')+'</td><td class="n">'+(m.gp?r1(m.my):'—')+'</td><td class="n">'+(m.gp?r1(m.op):'—')+'</td><td class="n">'+(m.gp?r1(m.tot):'—')+'</td><td class="n">'+(m.pra!=null?r1(m.pra):'—')+'</td></tr>';}).join('');
+ var rows=TEAMS.map(function(t){var m=matchupStats(t[1]);return '<tr class="click'+(sel===t[1]?' sel':'')+'" data-act="mtSel" data-t="'+t[1]+'"><td><span class="table-team-logo">'+teamLogo(t[1])+'<b>'+t[1]+'</b></span> <span class="muted">'+esc(t[0])+'</span>'+(state.next===t[1]?' <span class="tag man">Next</span>':'')+'</td><td class="n">'+m.gp+'</td><td class="n">'+(m.gp?m.w+'-'+m.l:'—')+'</td><td class="n">'+(m.gp?r1(m.my):'—')+'</td><td class="n">'+(m.gp?r1(m.op):'—')+'</td><td class="n">'+(m.gp?r1(m.tot):'—')+'</td><td class="n">'+(m.pra!=null?r1(m.pra):'—')+'</td></tr>';}).join('');
  var d='';
- if(sel){var m=matchupStats(sel);d='<div class="card sec"><div class="row" style="justify-content:space-between"><h3>'+esc(TEAM_NAME[sel])+'</h3><button class="btn sm" data-act="mtNext" data-t="'+sel+'">Set as next matchup</button></div>'
+ if(sel){var m=matchupStats(sel);d='<div class="card sec"><div class="row" style="justify-content:space-between"><h3 class="table-team-logo">'+teamLogo(sel)+esc(TEAM_NAME[sel])+'</h3><button class="btn sm" data-act="mtNext" data-t="'+sel+'">Set as next matchup</button></div>'
   +(m.gp?'<div class="kv"><div><span>Games</span><b>'+m.gp+'</b></div><div><span>W-L</span><b>'+m.w+'-'+m.l+'</b></div><div><span>Avg PTS</span><b>'+(m.ppg!=null?r1(m.ppg):'—')+'</b></div><div><span>Avg PRA</span><b>'+(m.pra!=null?r1(m.pra):'—')+'</b></div><div><span>Avg '+state.player.team+'</span><b>'+r1(m.my)+'</b></div><div><span>Avg '+sel+'</span><b>'+r1(m.op)+'</b></div><div><span>Avg total</span><b>'+r1(m.tot)+'</b></div></div>'
   +'<div class="scroll"><table><thead><tr><th>Quarter</th><th class="n">'+state.player.team+'</th><th class="n">'+sel+'</th><th class="n">Combined</th></tr></thead><tbody>'+m.qs.map(function(q,i){return '<tr><td>Q'+(i+1)+'</td><td class="n">'+r1(q.my)+'</td><td class="n">'+r1(q.op)+'</td><td class="n">'+r1(q.tot)+'</td></tr>';}).join('')+'</tbody></table></div>'
   :'<p class="empty">No games recorded against '+esc(TEAM_NAME[sel])+' yet. Nothing here is estimated.</p>')+'</div>';}
  return '<section class="sec"><header><h2>Matchup history</h2><span class="muted small">Built only from games you record</span></header><div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));align-items:start"><div class="card scroll"><table><thead><tr><th>Team</th><th class="n">GP</th><th class="n">W-L</th><th class="n">Avg '+state.player.team+'</th><th class="n">Avg opp</th><th class="n">Avg total</th><th class="n">PRA</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+d+'</div></section>';}
+
+/* ----- casino ----- */
+function casinoMenu(){
+ return '<section class="sec"><header><h2>Others</h2><span class="muted small">Balance '+ccFmt(balance())+'</span></header><div class="casino-menu">'
+ +'<button class="casino-game-card blackjack" data-act="openCasino" data-game="bj"><div class="casino-art"><div class="cards"><i>A♠</i><i>K♥</i></div></div><div class="casino-card-copy"><h3>Blackjack</h3><p>Beat the dealer without going over 21.</p></div></button>'
+ +'<button class="casino-game-card baccarat" data-act="openCasino" data-game="baccarat"><div class="casino-art"><div class="chip-stack"></div></div><div class="casino-card-copy"><h3>Baccarat</h3><p>Bet on Player, Banker or Tie.</p></div></button>'
+ +'</div>'+casinoHistoryHtml()+'</section>';
+}
+function casinoHistoryHtml(){var h=state.casino.history;if(!h.length)return '';return '<section class="sec"><header><h3>Recent casino games</h3></header><div class="card scroll"><table><thead><tr><th>Game</th><th>Result</th><th class="n">Stake</th><th class="n">Profit / loss</th><th>Date</th></tr></thead><tbody>'+h.map(function(r){return '<tr><td>'+esc(r.game)+'</td><td><span class="pill '+(r.result==='WIN'?'win':r.result==='LOSS'?'loss':r.result==='TIE'?'push':'pend')+'">'+esc(r.result)+'</span></td><td class="n">'+ccFmt(r.stake)+'</td><td class="n '+(r.delta>0?'pos':r.delta<0?'neg':'')+'">'+ccS(r.delta)+'</td><td>'+fmtTime(r.at)+'</td></tr>';}).join('')+'</tbody></table></div></section>';}
+function blackjackHtml(){
+ var b=state.casino.bj,active=b.status==='playing',done=b.status==='done';
+ return '<section class="sec"><header><h2>Blackjack</h2><button class="btn ghost sm" data-act="openCasino" data-game="menu">Back to games</button></header><div class="casino-table"><div class="casino-table-head"><span class="eyebrow">COURTSIDE Blackjack</span><b>Balance '+ccFmt(balance())+'</b></div>'
+ +'<div class="casino-hands"><div class="casino-hand"><h3><span>Dealer</span><b>'+(!active&&b.dealer.length?blackjackValue(b.dealer):b.dealer.length?blackjackValue([b.dealer[0]]):'—')+'</b></h3><div class="cards-row">'+casinoCards(b.dealer,active)+'</div></div>'
+ +'<div class="casino-hand"><h3><span>You</span><b>'+ (b.player.length?blackjackValue(b.player):'—')+'</b></h3><div class="cards-row">'+casinoCards(b.player,false)+'</div></div></div>'
+ +(b.message?'<p class="banner" style="margin-top:.7rem">'+esc(b.message)+'</p>':'')
+ +'<div class="casino-controls">'+(!active&&b.status!== 'idle'?'<div class="field" style="width:180px"><label for="bj-stake">New wager (CC)</label><input id="bj-stake" type="text" inputmode="decimal" data-bind="casinoStake" value="'+esc(ui.casinoStake)+'"></div><button class="btn" data-act="bjDeal">Deal</button>':'')
+ +(active?'<div class="field" style="width:180px"><label>Current wager</label><b>'+ccFmt(b.stake)+'</b></div><button class="btn" data-act="bjHit">Hit</button><button class="btn ghost" data-act="bjStand">Stand</button><button class="btn ghost" data-act="bjDouble">Double</button>':'')
+ +(b.status==='idle'?'<div class="field" style="width:180px"><label for="bj-stake">Wager (CC)</label><input id="bj-stake" type="text" inputmode="decimal" data-bind="casinoStake" value="'+esc(ui.casinoStake)+'"></div><button class="btn" data-act="bjDeal">Deal</button>':'')
+ +'</div></div>'+casinoHistoryHtml()+'</section>';
+}
+function baccaratHtml(){
+ var g=state.casino.baccarat,last=g.last;
+ return '<section class="sec"><header><h2>Baccarat</h2><button class="btn ghost sm" data-act="openCasino" data-game="menu">Back to games</button></header><div class="casino-table"><div class="casino-table-head"><span class="eyebrow">COURTSIDE Baccarat</span><b>Balance '+ccFmt(balance())+'</b></div>'
+ +(last?'<div class="casino-hands"><div class="casino-hand"><h3><span>Player</span><b>'+baccaratPoint(last.player)+'</b></h3><div class="cards-row">'+casinoCards(last.player,false)+'</div></div><div class="casino-hand"><h3><span>Banker</span><b>'+baccaratPoint(last.banker)+'</b></h3><div class="cards-row">'+casinoCards(last.banker,false)+'</div></div></div>':'<div class="casino-hands"><div class="casino-hand"><h3>Player</h3><p class="muted">Place a bet to deal</p></div><div class="casino-hand"><h3>Banker</h3><p class="muted">Place a bet to deal</p></div></div>')
+ +(last?'<p class="banner" style="margin-top:.7rem">'+(last.result==='tie'?'Tie':last.result==='banker'?'Banker wins':'Player wins')+' · '+(last.profit>=0?'+'+ccFmt(last.profit):'−'+ccFmt(Math.abs(last.profit)))+'</p>':'')
+ +'<div class="baccarat-history">'+(g.history||[]).slice().reverse().map(function(h){return '<i class="'+esc(h.result)+'">'+(h.result==='player'?'P':h.result==='banker'?'B':'T')+'</i>';}).join('')+'</div>'
+ +'<div class="casino-bet-panel">'+[['player','Player','1:1'],['banker','Banker','0.95:1'],['tie','Tie','8:1']].map(function(x){return '<button class="casino-bet-option'+(ui.baccaratSide===x[0]?' on':'')+'" data-act="baccaratSide" data-side="'+x[0]+'"><b>'+x[1]+'</b><span class="muted small">'+x[2]+'</span></button>';}).join('')+'</div>'
+ +'<div class="casino-controls"><div class="field" style="width:180px"><label for="bac-stake">Wager (CC)</label><input id="bac-stake" type="text" inputmode="decimal" data-bind="baccaratStake" value="'+esc(ui.baccaratStake)+'"></div><button class="btn" data-act="baccaratDeal">Deal</button></div></div>'+casinoHistoryHtml()+'</section>';
+}
+function viewOther(){var game=ui.casino==='bj'?'bj':ui.casino==='baccarat'?'baccarat':'menu';if(game==='bj')return blackjackHtml();if(game==='baccarat')return baccaratHtml();return casinoMenu();}
 
 /* ----- setup ----- */
 function viewSetup(){var p=state.player,S=state.settings,pf=function(k,l,ph){return '<div class="field"><label for="pl-'+k+'">'+l+'</label><input type="text" id="pl-'+k+'" data-bind="pl" data-k="'+k+'" value="'+esc(p[k])+'" placeholder="'+(ph||'')+'"></div>';};
@@ -627,7 +838,88 @@ function dialogHtml(){var d=ui.dialog;if(!d)return '';
  if(d.type==='next')return '<div class="veil"><div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dl-t"><h3 id="dl-t">Game saved. Who is next?</h3><p class="muted">Pick the next opponent on your MyCAREER schedule.</p><div class="field"><label for="dlg-next">Next opponent</label><select id="dlg-next" data-bind="dlgnext">'+teamOpts(d.sel||'','Select opponent…')+'</select></div><div class="row"><button class="btn" data-act="dlgNext">Set matchup</button><button class="btn ghost" data-act="dlgClose">Keep current</button></div></div></div>';
  return '<div class="veil"><div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dl-t"><h3 id="dl-t">'+esc(d.title)+'</h3><p class="muted">'+esc(d.msg)+'</p><div class="row"><button class="btn'+(d.danger?' danger':'')+'" data-act="dlgYes">'+esc(d.yes||'Confirm')+'</button><button class="btn ghost" data-act="dlgClose">Cancel</button></div></div></div>';}
 function bottomNote(){return storageOK?'':'<p class="banner" style="margin-top:1rem">Browser storage is unavailable here, so changes will not survive a refresh. Use Setup → Backup.</p>';}
-var VIEWS={dash:viewDash,book:viewBook,record:viewRecord,bets:viewBets,bank:viewBank,teams:viewTeams,setup:viewSetup};
+var VIEWS={dash:viewDash,book:viewBook,record:viewRecord,bets:viewBets,bank:viewBank,teams:viewTeams,other:viewOther,setup:viewSetup};
+
+/* ---------- casino games ---------- */
+function casinoSuit(){var suits=['♠','♥','♦','♣'];return suits[Math.floor(Math.random()*suits.length)];}
+function casinoDeck(){
+ var ranks=['A','2','3','4','5','6','7','8','9','10','J','Q','K'],deck=[],suits=['♠','♥','♦','♣'];
+ suits.forEach(function(s){ranks.forEach(function(r){deck.push({rank:r,suit:s});});});
+ for(var i=deck.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),tmp=deck[i];deck[i]=deck[j];deck[j]=tmp;}
+ return deck;
+}
+function blackjackValue(hand){var total=0,aces=0;
+ hand.forEach(function(c){if(c.rank==='A'){total+=11;aces++;}else if(/^(10|J|Q|K)$/.test(c.rank))total+=10;else total+=parseInt(c.rank,10);});
+ while(total>21&&aces){total-=10;aces--;}return total;}
+function cardHtml(c,back){if(back)return '<div class="playing-card back" aria-label="Hidden card"></div>';var red=c.suit==='♥'||c.suit==='♦';return '<div class="playing-card'+(red?' red':'')+'"><span>'+esc(c.rank)+c.suit+'</span><span style="text-align:right">'+esc(c.suit)+'</span></div>'; }
+function casinoCards(cards,hideSecond){return cards.map(function(c,i){return cardHtml(c,hideSecond&&i===1);}).join('');}
+function casinoRecord(game,result,stake,delta){state.casino.history.unshift({id:uid(),game:game,result:result,stake:stake,delta:r2(delta),at:new Date().toISOString()});state.casino.history=state.casino.history.slice(0,30);}
+function casinoLoss(label,stake,result){var now=new Date().toISOString();
+ state.ledger.push({id:uid(),t:now,kind:'CASINO',betId:null,delta:0,res:result||'LOSS',game:label});
+ casinoRecord(label,result||'LOSS',stake,-stake);}
+function casinoPay(label,stake,payout,delta,result){
+ var now=new Date().toISOString();
+ state.ledger.push({id:uid(),t:now,kind:'CASINO',betId:null,delta:r2(delta),res:result,game:label});
+ casinoRecord(label,result,stake,r2(payout-stake));
+}
+function bjDeal(){
+ var stake=r2(parseNum(ui.casinoStake));if(stake==null||stake<=0){toast('Enter a Blackjack wager above 0.');return;}
+ if(stake>balance()){toast('Wager exceeds your balance.');return;}
+ var deck=casinoDeck(),b=state.casino.bj;b.deck=deck;b.player=[deck.pop(),deck.pop(),];b.dealer=[deck.pop(),deck.pop(),];b.stake=stake;b.status='playing';b.message='';
+ state.ledger.push({id:uid(),t:new Date().toISOString(),kind:'CASINO',betId:null,delta:-stake,res:'WAGER',game:'Blackjack'});
+ var pv=blackjackValue(b.player),dv=blackjackValue(b.dealer);
+ if(pv===21||dv===21){
+  b.status='done';
+  if(pv===21&&dv===21){b.message='Push — both have blackjack.';casinoPay('Blackjack',stake,stake,stake,'PUSH');}
+  else if(pv===21){b.message='Blackjack — you win!';casinoPay('Blackjack',stake,stake*2.5,stake*2.5,'WIN');}
+  else{b.message='Dealer blackjack.';casinoLoss('Blackjack',stake,'LOSS');}
+ }
+ commit();toast(stake>0?'Wager placed: '+ccFmt(stake):'');}
+function bjHit(){
+ var b=state.casino.bj;if(b.status!=='playing')return;if(!b.deck.length)b.deck=casinoDeck();
+ b.player.push(b.deck.pop());var v=blackjackValue(b.player);
+ if(v>21){b.status='done';b.message='Bust — dealer wins.';casinoLoss('Blackjack',b.stake,'LOSS');toast('Bust — wager lost.');}
+ else if(v===21){bjStand();}
+ commit();}
+function bjStand(){
+ var b=state.casino.bj;if(b.status!=='playing')return;
+ while(blackjackValue(b.dealer)<17&&b.deck.length)b.dealer.push(b.deck.pop());
+ var pv=blackjackValue(b.player),dv=blackjackValue(b.dealer);
+ b.status='done';
+ if(dv>21||pv>dv){b.message=dv>21?'Dealer bust — you win!':'You win.';casinoPay('Blackjack',b.stake,b.stake*2,b.stake*2,'WIN');}
+ else if(pv===dv){b.message='Push.';casinoPay('Blackjack',b.stake,b.stake,b.stake,'PUSH');}
+ else{b.message='Dealer wins.';casinoLoss('Blackjack',b.stake,'LOSS');toast('Dealer wins.');}
+ commit();}
+function bjDouble(){
+ var b=state.casino.bj;if(b.status!=='playing'||b.player.length!==2)return;if(b.stake>balance()){toast('Insufficient credit to double.');return;}
+ state.ledger.push({id:uid(),t:new Date().toISOString(),kind:'CASINO',betId:null,delta:-b.stake,res:'DOUBLE',game:'Blackjack'});
+ b.stake=r2(b.stake*2);b.player.push(b.deck.pop());
+ if(blackjackValue(b.player)>21){b.status='done';b.message='Bust after doubling.';casinoLoss('Blackjack',b.stake,'LOSS');}else bjStand();
+ commit();}
+function baccaratPoint(cards){var total=0;cards.forEach(function(c){var v=/^(10|J|Q|K)$/.test(c.rank)?0:c.rank==='A'?1:parseInt(c.rank,10);total+=v;});return total%10;}
+function baccaratDeal(){
+ var stake=r2(parseNum(ui.baccaratStake)),side=ui.baccaratSide;if(stake==null||stake<=0){toast('Enter a Baccarat wager above 0.');return;}if(stake>balance()){toast('Wager exceeds your balance.');return;}
+ var deck=casinoDeck(),player=[deck.pop(),deck.pop()],banker=[deck.pop(),deck.pop()],pp=baccaratPoint(player),bp=baccaratPoint(banker);
+ if(pp<8&&bp<8){
+  var playerThird=null;if(pp<=5){playerThird=deck.pop();player.push(playerThird);}
+  if(playerThird===null){if(bp<=5)banker.push(deck.pop());}
+  else{var pv=baccaratPoint(playerThird?[playerThird]:[]),third=playerThird.rank==='A'?1:/^(10|J|Q|K)$/.test(playerThird.rank)?0:parseInt(playerThird.rank,10);
+   var draw=false;if(bp<=2)draw=true;else if(bp===3)draw=third!==8;else if(bp===4)draw=third>=2&&third<=7;else if(bp===5)draw=third>=4&&third<=7;else if(bp===6)draw=third===6||third===7;if(draw)banker.push(deck.pop());}
+ }
+ pp=baccaratPoint(player);bp=baccaratPoint(banker);var result=pp===bp?'tie':pp>bp?'player':'banker';
+ var profit=0,payout=0;
+ if(result==='tie'){payout=side==='tie'?r2(stake*9):r2(stake);profit=r2(payout-stake);}
+ else if(side===result){payout=result==='banker'?r2(stake+stake*0.95):r2(stake*2);profit=r2(payout-stake);}
+ state.ledger.push({id:uid(),t:new Date().toISOString(),kind:'CASINO',betId:null,delta:-stake,res:'WAGER',game:'Baccarat'});
+ if(result==='tie'){
+  if(payout>0)state.ledger.push({id:uid(),t:new Date().toISOString(),kind:'CASINO',betId:null,delta:r2(payout),res:side==='tie'?'WIN':'PUSH',game:'Baccarat'});
+ }
+ else if(side===result){state.ledger.push({id:uid(),t:new Date().toISOString(),kind:'CASINO',betId:null,delta:r2(payout),res:'WIN',game:'Baccarat'});}
+ else {profit=-stake;casinoLoss('Baccarat',stake,'LOSS');}
+ state.casino.baccarat={history:state.casino.baccarat.history.concat([{result:result,player:pp,banker:bp,at:new Date().toISOString()}]).slice(-20),last:{player:player,banker:banker,side:side,result:result,profit:profit,payout:payout,stake:stake}};
+ state.casino.baccarat.history=state.casino.baccarat.history.slice(-20);
+ casinoRecord('Baccarat',side===result?'WIN':result==='tie'?'TIE':'LOSS',stake,profit);
+ commit();toast(result.toUpperCase()+' wins · '+(profit>=0?'+'+ccFmt(profit):'−'+ccFmt(Math.abs(profit))));}
 
 /* ---------- runtime ---------- */
 if(typeof document==='undefined')return;
@@ -649,9 +941,8 @@ function saveGame(){
  if(!f.date){ui.formErr='Choose the game date.';return false;}
  if(!f.opp){ui.formErr='Select the opponent.';return false;}
  if(f.opp===f.team){ui.formErr='The opponent cannot be your own team.';return false;}
- if(!c.ok){ui.formErr='Enter all eight quarter scores (use 0 for a scoreless quarter).';return false;}
  var ot=null;if(f.otOn){var a=parseInt0(f.otMy),b=parseInt0(f.otOp);if(a==null||b==null){ui.formErr='Enter both overtime scores, or untick overtime.';return false;}ot={my:a,op:b};}
- if(c.myReg+(ot?ot.my:0)===c.opReg+(ot?ot.op:0)){ui.formErr='The final score is tied. Add overtime so the game has a winner.';return false;}
+ if(c.myF!=null&&c.opF!=null&&c.myF===c.opF){ui.formErr='The final score is tied. Add overtime so the game has a winner.';return false;}
  var keys=['pts','reb','ast','stl','blk','fgm','fga','tpm','tpa','fls'],st={},any=false;
  for(var i=0;i<keys.length;i++){var raw=String(f.st[keys[i]]).trim();if(raw===''){st[keys[i]]=null;continue;}var v=parseInt0(raw);if(v==null){ui.formErr='Box score fields must be whole numbers (0 or more).';return false;}st[keys[i]]=v;any=true;}
  if(st.fgm!=null&&st.fga!=null&&st.fgm>st.fga){ui.formErr='FG made cannot be more than FG attempted.';return false;}
@@ -672,6 +963,14 @@ document.addEventListener('click',function(e){
  var go_=e.target.closest('[data-go]');if(go_){go(go_.dataset.go);return;}
  var el=e.target.closest('[data-act]');if(!el)return;var d=el.dataset,act=d.act;
  switch(act){
+  case 'openCasino':{ui.casino=d.game||'menu';commit();return;}
+  case 'bjDeal':{bjDeal();return;}
+  case 'bjHit':{bjHit();return;}
+  case 'bjStand':{bjStand();return;}
+  case 'bjDouble':{bjDouble();return;}
+  case 'baccaratSide':{ui.baccaratSide=d.side;commit();return;}
+  case 'baccaratDeal':{baccaratDeal();return;}
+  case 'toggleMarket':{ui.marketOpen[d.market]=ui.marketOpen[d.market]===false?true:false;commit();return;}
   case 'pick':{if(!state.next){toast('Select your next opponent first.');return;}var sl=state.slip,ex=sl.legs.filter(function(l){return l.marketId===d.id;})[0];
    if(ex&&ex.side===d.side)sl.legs=sl.legs.filter(function(l){return l!==ex;});else if(ex)ex.side=d.side;else sl.legs.push({id:uid(),marketId:d.id,side:d.side,odds:'',stake:''});ui.slipErr='';commit();return;}
   case 'step':{var l=ln(d.id),mk=MK[d.id],cur=l.manual?l.line:effLine(mk,modelFor(mk,state.next));cur=cur==null?0:cur;var nv=Math.round((cur+parseFloat(d.d))*100)/100;l.manual=true;l.line=nv;l.raw=String(nv);commit();return;}
@@ -703,7 +1002,7 @@ document.addEventListener('click',function(e){
    if(r==='deleteGame'){state.games=state.games.filter(function(g){return g.id!==id;});ui.form=null;toast('Game deleted');}
    else if(r==='resetBank'){var delta=r2(state.settings.start-balance());if(delta!==0){state.ledger.push({id:uid(),t:new Date().toISOString(),kind:'RESET',betId:null,delta:delta});}toast('Bankroll reset');}
    else if(r==='importBackup'){try{state=merge(JSON.parse(ui.raw['import']));ui.raw={};ui.backupMsg='Backup restored.';toast('Backup restored');}catch(err){ui.backupMsg='Could not restore that backup.';}}
-   else if(r==='wipe'){state=defaults();ui.form=null;ui.raw={};ui.oddsEdit={};ui.mt=null;toast('All data erased');}
+   else if(r==='wipe'){state=defaults();state.recentImported=true;ui.form=null;ui.raw={};ui.oddsEdit={};ui.mt=null;toast('All data erased');}
    commit();return;}
  }});
 
@@ -712,10 +1011,12 @@ function onField(e){
  var isChoice=el.tagName==='SELECT'||el.type==='checkbox';if(e.type==='input'&&isChoice)return;if(e.type==='change'&&!isChoice)return;
  var v=el.value,d=el.dataset;
  switch(b){
+  case 'casinoStake':ui.casinoStake=v;break;
+  case 'baccaratStake':ui.baccaratStake=v;break;
   case 'next':setNext(v);toast(v?'Next matchup: '+state.player.team+' vs '+v:'Opponent cleared');break;
   case 'perf':ui.perf=v;break;
   case 'line':{var l=ln(d.id);l.manual=true;l.raw=v;l.line=parseNum(v);break;}
-  case 'ovr':{var o=ln(d.id);o.ovrRaw=o.ovrRaw||{};o.ovr=o.ovr||{};o.ovrRaw[d.side]=v;var n=/^[+-]?\d+$/.test(v.trim())?parseInt(v.trim(),10):null;o.ovr[d.side]=validOdds(n)?n:null;break;}
+  case 'ovr':{var o=ln(d.id);o.ovrRaw=o.ovrRaw||{};o.ovr=o.ovr||{};o.ovrRaw[d.side]=v;var decimal=parseDecimalOdds(v),n=decimal==null?null:decimalToAmerican(decimal);o.ovr[d.side]=validOdds(n)?n:null;break;}
   case 'legOdds':{var lg=state.slip.legs.filter(function(x){return x.id===d.id;})[0];if(lg)lg.odds=v;break;}
   case 'legStake':{var lg2=state.slip.legs.filter(function(x){return x.id===d.id;})[0];if(lg2)lg2.stake=v;break;}
   case 'parlayStake':state.slip.parlayStake=v;break;
@@ -740,11 +1041,15 @@ function onField(e){
  commit();}
 document.addEventListener('input',onField);
 document.addEventListener('change',onField);
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ui.dialog){ui.dialog=null;render();}});
+document.addEventListener('keydown',function(e){
+ if(e.key==='Escape'&&ui.dialog){ui.dialog=null;render();return;}
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches('.mgroup>header')){e.preventDefault();e.target.click();}
+});
 window.addEventListener('hashchange',routeFromHash);
 var rz;window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(function(){if(ui.tab==='dash'||ui.tab==='bank')render();},200);});
 
 state=load();
+save();
 try{localStorage.setItem(KEY+'.t','1');localStorage.removeItem(KEY+'.t');}catch(e){storageOK=false;}
 var h0=(location.hash||'').replace('#','');if(VIEWS[h0])ui.tab=h0;
 render();
