@@ -235,16 +235,70 @@ svg.cv{display:block;width:100%;height:auto}
 .cards-row{display:flex;flex-wrap:wrap;gap:.5rem;min-height:118px;align-items:center}
 .playing-card{width:72px;height:104px;border-radius:7px;background:#f7f7f2;border:2px solid #dfe2ea;color:#171b26;display:flex;flex-direction:column;justify-content:space-between;padding:.38rem;font-family:Georgia,serif;font-size:1.05rem;font-weight:700;box-shadow:0 7px 16px rgba(0,0,0,.32)}
 .playing-card.red{color:#bb1f35}
-.cards-row .playing-card{animation:dealCard .38s cubic-bezier(.2,.75,.25,1) both;transform-origin:top right}
-.cards-row .playing-card:nth-child(2){animation-delay:.12s}
-.cards-row .playing-card:nth-child(3){animation-delay:.24s}
-.cards-row .playing-card:nth-child(4){animation-delay:.36s}
+.cards-row .playing-card{animation:dealCard .56s cubic-bezier(.2,.75,.25,1) both;transform-origin:top right}
+.cards-row .playing-card:nth-child(2){animation-delay:.16s}
+.cards-row .playing-card:nth-child(3){animation-delay:.32s}
+.cards-row .playing-card:nth-child(4){animation-delay:.48s}
 .playing-card.back{background:repeating-linear-gradient(45deg,#a51f35 0 8px,#c52b43 8px 16px);border:5px solid #f1eee6;color:transparent}
 @keyframes dealCard{from{opacity:0;transform:translate(120px,-80px) rotate(18deg) scale(.72)}to{opacity:1;transform:none}}
 .casino-controls{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem}
 .casino-bet-panel{display:grid;grid-template-columns:repeat(3,minmax(120px,1fr));gap:.55rem;margin-top:.8rem}
 .casino-bet-option{border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:.7rem;text-align:center;cursor:pointer}
 .casino-bet-option:hover,.casino-bet-option.on{border-color:var(--accent);background:var(--panel-2)}
+.casino-game-card.color-game{background:radial-gradient(circle at 75% 25%,rgba(61,150,245,.25),transparent 30%),linear-gradient(145deg,#17274d,#09101f)}
+.casino-game-card.wheel-game{background:radial-gradient(circle at 75% 25%,rgba(242,184,75,.25),transparent 30%),linear-gradient(145deg,#392c4a,#09101f)}
+.casino-game-card.pachinko-game{background:radial-gradient(circle at 75% 25%,rgba(53,208,138,.22),transparent 30%),linear-gradient(145deg,#143b3c,#09101f)}
+.casino-art .color-dots{display:grid;grid-template-columns:repeat(3,38px);gap:.45rem}
+.casino-art .color-dots i{width:38px;height:38px;border-radius:50%;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+.casino-art .color-dots i.red{background:#ff6272}.casino-art .color-dots i.blue{background:#3d96f5}.casino-art .color-dots i.yellow{background:#f2c94c}
+.casino-art .color-dots i.green{background:#35d08a}.casino-art .color-dots i.white{background:#f3f5fb}.casino-art .color-dots i.violet{background:#a879ff}
+.casino-art .wheel-mini{width:112px;height:112px;border-radius:50%;border:7px solid #f3ca5f;background:conic-gradient(#ee3b5b 0 45deg,#3d96f5 45deg 90deg,#35d08a 90deg 135deg,#f2b84b 135deg 180deg,#8e67db 180deg 225deg,#ee3b5b 225deg 270deg,#3d96f5 270deg 315deg,#35d08a 315deg);box-shadow:0 10px 24px rgba(0,0,0,.4)}
+.casino-art .pegs-mini{display:grid;grid-template-columns:repeat(5,12px);gap:12px}
+.casino-art .pegs-mini i{width:12px;height:12px;border-radius:50%;background:#c9d6ec;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.casino-art .pegs-mini i:nth-child(3n){background:#f3ca5f}
+.casino-mini-controls{display:flex;flex-wrap:wrap;gap:.5rem;align-items:end;margin-top:.8rem}
+.casino-mini-controls .field{width:180px}
+.casino-result{margin-top:.7rem}
+.color-bets{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:.55rem}
+.color-bet{display:grid;grid-template-columns:24px minmax(0,1fr);align-items:center;gap:.35rem .55rem;padding:.65rem;border:1px solid var(--line);border-radius:8px;background:rgba(4,10,20,.38)}
+.color-bet label{grid-column:1/-1;display:flex;align-items:center;gap:.5rem;color:var(--fg);font-weight:600}
+.color-bet input{grid-column:1/-1}
+.color-swatch{width:20px;height:20px;border-radius:50%;background:var(--die-color);border:1px solid rgba(255,255,255,.35)}
+.color-swatch.red{--die-color:#ff6272}.color-swatch.blue{--die-color:#3d96f5}.color-swatch.yellow{--die-color:#f2c94c}
+.color-swatch.green{--die-color:#35d08a}.color-swatch.white{--die-color:#f3f5fb}.color-swatch.violet{--die-color:#a879ff}
+.color-dice-stage{display:flex;justify-content:center;gap:clamp(24px,8vw,60px);padding:1.3rem .5rem;perspective:760px}
+.color-cube{position:relative;width:76px;height:76px;transform-style:preserve-3d}
+.color-cube.roll{animation:colorDiceRoll 1.25s cubic-bezier(.15,.7,.15,1) both}
+.color-face{position:absolute;inset:0;display:grid;place-items:center;border:2px solid rgba(255,255,255,.75);border-radius:10px;backface-visibility:hidden;font-family:var(--display);font-size:.77rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;box-shadow:inset 0 0 0 2px rgba(0,0,0,.12)}
+.color-face.red{background:#e53e55;color:#fff}.color-face.blue{background:#277fd3;color:#fff}.color-face.yellow{background:#efc543;color:#231b00}
+.color-face.green{background:#23aa6e;color:#041c11}.color-face.white{background:#f3f5fb;color:#1b2233}.color-face.violet{background:#8c5bd6;color:#fff}
+.color-face.front{transform:translateZ(38px)}.color-face.back{transform:rotateY(180deg) translateZ(38px)}
+.color-face.right{transform:rotateY(90deg) translateZ(38px)}.color-face.left{transform:rotateY(-90deg) translateZ(38px)}
+.color-face.top{transform:rotateX(90deg) translateZ(38px)}.color-face.bottom{transform:rotateX(-90deg) translateZ(38px)}
+.color-round-summary{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center}
+.color-round-history{display:flex;flex-direction:column;gap:.6rem}
+.color-round-history .card{padding:.75rem}
+@keyframes colorDiceRoll{from{transform:rotateX(var(--start-x)) rotateY(var(--start-y))}to{transform:rotateX(var(--end-x)) rotateY(var(--end-y))}}
+.wheel-wrap{position:relative;display:grid;place-items:center;width:230px;height:230px;margin:.8rem auto 0}
+.multiplier-wheel{position:relative;width:210px;height:210px;border:7px solid #e6c46d;border-radius:50%;background:conic-gradient(#ee3b5b 0 45deg,#3d96f5 45deg 90deg,#35d08a 90deg 135deg,#f2b84b 135deg 180deg,#8e67db 180deg 225deg,#ee3b5b 225deg 270deg,#3d96f5 270deg 315deg,#35d08a 315deg);box-shadow:0 10px 24px rgba(0,0,0,.4);transform:rotate(var(--wheel-angle,0deg))}
+.multiplier-wheel.spin{animation:wheelSpin 4.5s cubic-bezier(.12,.75,.1,1) both}
+.wheel-label{position:absolute;left:calc(50% - 18px);top:calc(50% - 10px);width:36px;text-align:center;font-size:.78rem;font-weight:700;color:#fff;text-shadow:0 1px 3px #000}
+.wheel-pointer{position:absolute;z-index:2;top:0;left:calc(50% - 12px);width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:24px solid #fff;filter:drop-shadow(0 2px 3px #000)}
+.wheel-hub{position:absolute;left:calc(50% - 17px);top:calc(50% - 17px);width:34px;height:34px;border-radius:50%;background:#f3ca5f;border:4px solid #fff}
+@keyframes wheelSpin{from{transform:rotate(0)}to{transform:rotate(var(--wheel-angle))}}
+.pachinko-board{position:relative;overflow:hidden;max-width:540px;margin:.8rem auto 0;padding:1rem .5rem .55rem;border:1px solid rgba(161,183,221,.25);border-radius:10px;background:rgba(4,10,20,.38)}
+.pachinko-row{display:flex;justify-content:center;gap:clamp(10px,3vw,23px);height:24px}
+.pachinko-peg{width:7px;height:7px;border-radius:50%;background:#d7e2f5;box-shadow:0 1px 4px rgba(0,0,0,.6)}
+.pachinko-ball{position:absolute;z-index:2;top:calc(100% - 53px);left:var(--x8,50%);width:13px;height:13px;border-radius:50%;background:#f3ca5f;box-shadow:0 0 10px rgba(243,202,95,.8);transform:translateX(-50%)}
+.pachinko-ball.drop{animation:pachinkoDrop 1.4s cubic-bezier(.12,.7,.18,1) both}
+@keyframes pachinkoDrop{
+  0%{top:8px;left:var(--x0)}12.5%{top:32px;left:var(--x1)}25%{top:56px;left:var(--x2)}
+  37.5%{top:80px;left:var(--x3)}50%{top:104px;left:var(--x4)}62.5%{top:128px;left:var(--x5)}
+  75%{top:152px;left:var(--x6)}87.5%{top:176px;left:var(--x7)}100%{top:calc(100% - 53px);left:var(--x8)}
+}
+.pachinko-slots{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:2px;margin-top:.35rem}
+.pachinko-slot{border-radius:4px 4px 2px 2px;padding:.3rem .05rem;background:var(--panel-2);text-align:center;font-size:.7rem;font-weight:700}
+.pachinko-slot.on{background:var(--accent);color:var(--accent-ink)}
 .baccarat-history{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.7rem}
 .baccarat-history i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--display);font-weight:700;font-size:.75rem;border:1px solid rgba(255,255,255,.25)}
 .baccarat-history i.player{background:#3d96f5;color:#04101f}.baccarat-history i.banker{background:#ff6272;color:#1c0509}.baccarat-history i.tie{background:#35d08a;color:#04101f}
@@ -330,15 +384,21 @@ var fmtTime=function(t){try{return new Date(t).toLocaleString(undefined,{month:'
 var todayStr=function(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
 
 /* ---------- state ---------- */
-var storageOK=true,state,ui={tab:'dash',perf:'pra',form:null,formErr:'',slipErr:'',dialog:null,oddsEdit:{},raw:{},mt:null,betsFilter:'all',ledFilter:'all',showBackup:false,backupMsg:'',marketOpen:{match:true,handicap:true,totals:true,quarters:true,props:true},casino:'menu',casinoStake:'100',baccaratStake:'100',baccaratSide:'banker'};
+var storageOK=true,state,ui={tab:'dash',perf:'pra',form:null,formErr:'',slipErr:'',dialog:null,oddsEdit:{},raw:{},mt:null,betsFilter:'all',ledFilter:'all',showBackup:false,backupMsg:'',marketOpen:{match:true,handicap:true,totals:true,quarters:true,props:true},casino:'menu',casinoStake:'100',baccaratStake:'100',baccaratSide:'banker',colorBets:{},colorAnimationSeen:null,colorBusy:false,wheelStake:'100',wheelAnimationSeen:null,wheelBusy:false,pachinkoStake:'100',pachinkoAnimationSeen:null,pachinkoBusy:false};
 function defaults(){return {v:1,recentImported:false,
  player:{name:'Sebastian Victor',team:'PHI',pos:'',ovr:'',height:'',build:''},
  settings:{start:10000,margin:5,includeOT:false,baseMy:53.9,baseOpp:48.7,baseGames:5},
  next:null,games:[],bets:[],ledger:[],lines:{},slip:{mode:'single',legs:[],parlayStake:'',parlayOdds:''},
- casino:{game:'menu',history:[],bj:{deck:[],player:[],dealer:[],stake:0,status:'idle',message:''},baccarat:{history:[]}}};}
-function merge(o){var d=defaults();o=o||{};return {v:1,recentImported:!!o.recentImported,player:Object.assign({},d.player,o.player),settings:Object.assign({},d.settings,o.settings),
+ casino:{game:'menu',history:[],bj:{deck:[],player:[],dealer:[],stake:0,status:'idle',message:''},baccarat:{history:[]},color:{last:null,rounds:[],payouts:{0:0,1:2,2:3,3:4}},wheel:{last:null},pachinko:{last:null}}};}
+function merge(o){var d=defaults();o=o||{};var c=Object.assign({},d.casino.color,(o.casino&&o.casino.color)||{}),p=Object.assign({},d.casino.color.payouts,c.payouts||{}),rounds=Array.isArray(c.rounds)?c.rounds.filter(function(r){return r&&r.roundId&&Array.isArray(r.dice)&&Array.isArray(r.bets);}):[],w=Object.assign({},d.casino.wheel,(o.casino&&o.casino.wheel)||{}),pk=Object.assign({},d.casino.pachinko,(o.casino&&o.casino.pachinko)||{});
+ for(var i=0;i<=3;i++){var n=parseNum(p[i]);p[i]=n!=null&&n>=0&&n<=100?r2(n):d.casino.color.payouts[i];}
+ c.payouts=p;c.rounds=rounds.slice(-30);if(!c.last||!c.last.roundId||!Array.isArray(c.last.dice)||!Array.isArray(c.last.bets))c.last=null;
+ if(!w.last||!w.last.roundId)w.last=null;
+ if(!pk.last||!pk.last.roundId||!Array.isArray(pk.last.route)||pk.last.route.length!==9||!isFinite(pk.last.index)||pk.last.index!==Math.floor(pk.last.index)||pk.last.index<0||pk.last.index>8)pk.last=null;
+ if(pk.last){for(var j=0;j<pk.last.route.length;j++){var x=parseNum(pk.last.route[j]);if(x==null||x<0||x>100){pk.last=null;break;}pk.last.route[j]=x;}}
+ return {v:1,recentImported:!!o.recentImported,player:Object.assign({},d.player,o.player),settings:Object.assign({},d.settings,o.settings),
  next:o.next||null,games:o.games||[],bets:o.bets||[],ledger:o.ledger||[],lines:o.lines||{},slip:Object.assign({},d.slip,o.slip,{legs:(o.slip&&o.slip.legs)||[]}),
- casino:Object.assign({},d.casino,o.casino,{history:(o.casino&&o.casino.history)||[],bj:Object.assign({},d.casino.bj,(o.casino&&o.casino.bj)||{}),baccarat:Object.assign({},d.casino.baccarat,(o.casino&&o.casino.baccarat)||{})})};}
+ casino:Object.assign({},d.casino,o.casino,{history:(o.casino&&o.casino.history)||[],bj:Object.assign({},d.casino.bj,(o.casino&&o.casino.bj)||{}),baccarat:Object.assign({},d.casino.baccarat,(o.casino&&o.casino.baccarat)||{}),color:c,wheel:w,pachinko:pk})};}
 function importRecentGames(s){
  if(s.recentImported||s.games.length)return;
  var rows=[
@@ -582,7 +642,7 @@ function chart(title,labels,tips,series,opts){opts=opts||{};
 var TABS=[['dash','Dashboard'],['book','Sportsbook'],['record','Record game'],['bets','My bets'],['bank','Bankroll'],['teams','Matchups'],['other','Others'],['setup','Setup']];
 function rawVal(key,fb){return ui.raw[key]!=null?ui.raw[key]:fb;}
 function teamOpts(sel,placeholder){return (placeholder?'<option value="">'+esc(placeholder)+'</option>':'')+TEAMS.map(function(t){return '<option value="'+t[1]+'"'+(sel===t[1]?' selected':'')+'>'+esc(t[0])+' ('+t[1]+')</option>';}).join('');}
-function teamLogo(abbr){return '<img class="team-logo" src="COURTSIDE-assets/nba/'+esc(abbr)+'.png" alt="'+esc(TEAM_NAME[abbr]||abbr)+' logo">';}
+function teamLogo(abbr){var code=esc(abbr);return '<img class="team-logo" src="./'+code+'.png" onerror="this.onerror=null;this.src=\'COURTSIDE-assets/nba/'+code+'.png\'" alt="'+esc(TEAM_NAME[abbr]||abbr)+' logo">';}
 function gameLabels(){return state.games.map(function(g,i){return 'G'+(i+1);});}
 function gameTips(){return state.games.map(function(g,i){return 'G'+(i+1)+' · '+fmtDate(g.date)+' vs '+g.oppTeam;});}
 
@@ -794,9 +854,12 @@ function casinoMenu(){
  return '<section class="sec"><header><h2>Others</h2><span class="muted small">Balance '+ccFmt(balance())+'</span></header><div class="casino-menu">'
  +'<button class="casino-game-card blackjack" data-act="openCasino" data-game="bj"><div class="casino-art"><div class="cards"><i>A♠</i><i>K♥</i></div></div><div class="casino-card-copy"><h3>Blackjack</h3><p>Beat the dealer without going over 21.</p></div></button>'
  +'<button class="casino-game-card baccarat" data-act="openCasino" data-game="baccarat"><div class="casino-art"><div class="chip-stack"></div></div><div class="casino-card-copy"><h3>Baccarat</h3><p>Bet on Player, Banker or Tie.</p></div></button>'
+ +'<button class="casino-game-card color-game" data-act="openCasino" data-game="color"><div class="casino-art"><div class="color-dots"><i class="red"></i><i class="blue"></i><i class="yellow"></i><i class="green"></i><i class="white"></i><i class="violet"></i></div></div><div class="casino-card-copy"><h3>Color Game</h3><p>Bet on colors, then watch three dice roll.</p></div></button>'
+ +'<button class="casino-game-card wheel-game" data-act="openCasino" data-game="wheel"><div class="casino-art"><div class="wheel-mini"></div></div><div class="casino-card-copy"><h3>Multiplier Wheel</h3><p>Spin and win up to 10× your wager.</p></div></button>'
+ +'<button class="casino-game-card pachinko-game" data-act="openCasino" data-game="pachinko"><div class="casino-art"><div class="pegs-mini">'+Array.from({length:15},function(){return '<i></i>';}).join('')+'</div></div><div class="casino-card-copy"><h3>Pachinko</h3><p>Drop a ball and see which multiplier it lands on.</p></div></button>'
  +'</div>'+casinoHistoryHtml()+'</section>';
 }
-function casinoHistoryHtml(){var h=state.casino.history;if(!h.length)return '';return '<section class="sec"><header><h3>Recent casino games</h3></header><div class="card scroll"><table><thead><tr><th>Game</th><th>Result</th><th class="n">Stake</th><th class="n">Profit / loss</th><th>Date</th></tr></thead><tbody>'+h.map(function(r){return '<tr><td>'+esc(r.game)+'</td><td><span class="pill '+(r.result==='WIN'?'win':r.result==='LOSS'?'loss':r.result==='TIE'?'push':'pend')+'">'+esc(r.result)+'</span></td><td class="n">'+ccFmt(r.stake)+'</td><td class="n '+(r.delta>0?'pos':r.delta<0?'neg':'')+'">'+ccS(r.delta)+'</td><td>'+fmtTime(r.at)+'</td></tr>';}).join('')+'</tbody></table></div></section>';}
+function casinoHistoryHtml(){var h=state.casino.history;if(!h.length)return '';return '<section class="sec"><header><h3>Recent casino games</h3></header><div class="card scroll"><table><thead><tr><th>Game</th><th>Result</th><th class="n">Stake</th><th class="n">Profit / loss</th><th>Date</th></tr></thead><tbody>'+h.map(function(r){return '<tr><td>'+esc(r.game)+'</td><td><span class="pill '+(r.result==='WIN'?'win':r.result==='LOSS'?'loss':r.result==='PUSH'||r.result==='TIE'?'push':'pend')+'">'+esc(r.result)+'</span></td><td class="n">'+ccFmt(r.stake)+'</td><td class="n '+(r.delta>0?'pos':r.delta<0?'neg':'')+'">'+ccS(r.delta)+'</td><td>'+fmtTime(r.at)+'</td></tr>';}).join('')+'</tbody></table></div></section>';}
 function blackjackHtml(){
  var b=state.casino.bj,active=b.status==='playing',done=b.status==='done';
  return '<section class="sec"><header><h2>Blackjack</h2><button class="btn ghost sm" data-act="openCasino" data-game="menu">Back to games</button></header><div class="casino-table"><div class="casino-table-head"><span class="eyebrow">COURTSIDE Blackjack</span><b>Balance '+ccFmt(balance())+'</b></div>'
@@ -817,16 +880,73 @@ function baccaratHtml(){
  +'<div class="casino-bet-panel">'+[['player','Player','1:1'],['banker','Banker','0.95:1'],['tie','Tie','8:1']].map(function(x){return '<button class="casino-bet-option'+(ui.baccaratSide===x[0]?' on':'')+'" data-act="baccaratSide" data-side="'+x[0]+'"><b>'+x[1]+'</b><span class="muted small">'+x[2]+'</span></button>';}).join('')+'</div>'
  +'<div class="casino-controls"><div class="field" style="width:180px"><label for="bac-stake">Wager (CC)</label><input id="bac-stake" type="text" inputmode="decimal" data-bind="baccaratStake" value="'+esc(ui.baccaratStake)+'"></div><button class="btn" data-act="baccaratDeal">Deal</button></div></div>'+casinoHistoryHtml()+'</section>';
 }
-function viewOther(){var game=ui.casino==='bj'?'bj':ui.casino==='baccarat'?'baccarat':'menu';if(game==='bj')return blackjackHtml();if(game==='baccarat')return baccaratHtml();return casinoMenu();}
+function casinoMiniHeader(title){return '<header><h2>'+title+'</h2><button class="btn ghost sm" data-act="openCasino" data-game="menu">Back to games</button></header><div class="casino-table"><div class="casino-table-head"><span class="eyebrow">COURTSIDE '+title+'</span><b>Balance '+ccFmt(balance())+'</b></div>';}
+function casinoResultHtml(last,detail){return last?'<p class="banner casino-result">'+detail+' · '+(last.profit>=0?'+'+ccFmt(last.profit):'−'+ccFmt(Math.abs(last.profit)))+'</p>':'<p class="muted small casino-result">Place a wager to play. All games use virtual COURTSIDE credits.</p>';}
+function casinoStakeField(id,label,bind,value){return '<div class="field"><label for="'+id+'">'+label+' (CC)</label><input id="'+id+'" type="text" inputmode="decimal" data-bind="'+bind+'" value="'+esc(value)+'"></div>';}
+var COLOR_GAME_COLORS=[['red','Red'],['blue','Blue'],['yellow','Yellow'],['green','Green'],['white','White'],['violet','Violet']];
+var COLOR_DIE_POSE={red:[0,0],blue:[0,180],yellow:[0,-90],green:[0,90],white:[-90,0],violet:[90,0]};
+function colorDieHtml(color,roll){
+ var shown=color||'red',pose=COLOR_DIE_POSE[shown],startX=(3+Math.floor(Math.random()*4))*360,startY=(3+Math.floor(Math.random()*4))*360;
+ var faces=[['front','red'],['back','blue'],['right','yellow'],['left','green'],['top','white'],['bottom','violet']];
+ return '<div class="color-cube'+(roll?' roll':'')+'" style="--start-x:'+startX+'deg;--start-y:'+startY+'deg;--end-x:'+pose[0]+'deg;--end-y:'+pose[1]+'deg;transform:rotateX('+pose[0]+'deg) rotateY('+pose[1]+'deg)">'+faces.map(function(f){return '<i class="color-face '+f[0]+' '+f[1]+'">'+f[1]+'</i>';}).join('')+'</div>';
+}
+function colorRoundHistoryHtml(){
+ var rounds=state.casino.color.rounds.slice().reverse().slice(0,12);
+ if(!rounds.length)return '';
+ return '<section class="sec"><header><h3>Recent Color Game rounds</h3></header><div class="card scroll"><table><thead><tr><th>Round ID</th><th>Dice</th><th class="n">Total bet</th><th class="n">Payout</th><th class="n">Net</th></tr></thead><tbody>'+rounds.map(function(r){return '<tr><td>'+esc(r.roundId)+'</td><td>'+r.dice.map(function(c){return esc(c);}).join(' · ')+'</td><td class="n">'+ccFmt(r.totalStake)+'</td><td class="n">'+ccFmt(r.totalPayout)+'</td><td class="n '+(r.profit>0?'pos':r.profit<0?'neg':'')+'">'+ccS(r.profit)+'</td></tr>';}).join('')+'</tbody></table></div></section>';
+}
+function colorHtml(){
+ var g=state.casino.color,last=g.last,roll=!!last&&ui.colorAnimationSeen!==last.roundId;
+ if(roll)ui.colorAnimationSeen=last.roundId;
+ var dice=last?last.dice:['red','red','red'];
+ var payoutRule=[0,1,2,3].map(function(m){return m+(m===1?' match: ':' matches: ')+state.casino.color.payouts[m]+'×';}).join(' · ');
+ var betCards=COLOR_GAME_COLORS.map(function(c){var key=c[0];return '<div class="color-bet"><label for="color-bet-'+key+'"><i class="color-swatch '+key+'"></i>'+c[1]+'</label><input id="color-bet-'+key+'" type="text" inputmode="decimal" data-bind="colorBet" data-color="'+key+'" value="'+esc(ui.colorBets[key]||'')+'" placeholder="No bet"></div>';}).join('');
+ var result=last?'<div class="card sec"><div class="color-round-summary"><b>Round '+esc(last.roundId)+'</b><span>Total bet '+ccFmt(last.totalStake)+'</span><span>Total payout '+ccFmt(last.totalPayout)+'</span><span class="'+(last.profit>0?'pos':last.profit<0?'neg':'')+'">Net '+ccS(last.profit)+'</span><span>Balance '+ccFmt(balance())+'</span></div><div class="scroll"><table><thead><tr><th>Color</th><th class="n">Matches</th><th class="n">Bet</th><th class="n">Return multiplier</th><th class="n">Payout</th><th class="n">Net</th></tr></thead><tbody>'+last.bets.map(function(b){return '<tr><td><span class="row"><i class="color-swatch '+esc(b.color)+'"></i>'+esc(b.color)+'</span></td><td class="n">'+b.matches+'</td><td class="n">'+ccFmt(b.stake)+'</td><td class="n">'+b.multiplier+'×</td><td class="n">'+ccFmt(b.payout)+'</td><td class="n '+(b.profit>0?'pos':b.profit<0?'neg':'')+'">'+ccS(b.profit)+'</td></tr>';}).join('')+'</tbody></table></div></div>':'<p class="muted small">Bet on one or more colors, then roll all three dice. Matching colors are paid separately.</p>';
+ return '<section class="sec">'+casinoMiniHeader('Philippine Color Game')
+ +'<p class="muted small">Three dice, six colors. Each color bet pays separately. Current total returns: '+esc(payoutRule)+'. Multipliers include the original bet.</p>'
+ +'<div class="color-dice-stage" aria-label="Three color dice">'+dice.map(function(c){return colorDieHtml(c,roll);}).join('')+'</div>'
+ +(last?'<p class="color-round-summary" aria-live="polite"><b>Dice result:</b> '+dice.map(function(c){return esc(c.toUpperCase());}).join(' · ')+'</p>':'')
+ +result+'<h3>Place separate bets by color</h3><div class="color-bets">'+betCards+'</div>'
+ +'<div class="casino-mini-controls"><button class="btn" data-act="colorPlay"'+(ui.colorBusy?' disabled':'')+'>'+(ui.colorBusy?'Rolling…':'Roll dice')+'</button><span class="muted small">Available balance: '+ccFmt(balance())+'</span></div></div>'+colorRoundHistoryHtml()+casinoHistoryHtml()+'</section>';
+}
+var WHEEL_MULTIPLIERS=[0,0.5,1,1.5,2,3,5,10];
+var PACHINKO_MULTIPLIERS=[8,3,1.5,1,0.5,1,1.5,3,8];
+function wheelHtml(){
+ var last=state.casino.wheel.last,angle=last?last.angle:0,spin=!!last&&ui.wheelAnimationSeen!==last.roundId;
+ if(spin)ui.wheelAnimationSeen=last.roundId;
+ return '<section class="sec">'+casinoMiniHeader('Multiplier Wheel')
+ +'<p class="muted small">Each of the eight wheel sections is equally likely. The multiplier is the total return, including your wager.</p>'
+ +'<div class="wheel-wrap"><div class="wheel-pointer" aria-hidden="true"></div><div class="multiplier-wheel'+(spin?' spin':'')+'"'+(last?' style="--wheel-angle:'+angle+'deg"':'')+'>'+WHEEL_MULTIPLIERS.map(function(m,i){var a=i*45+22.5;return '<span class="wheel-label" style="transform:rotate('+a+'deg) translateY(-78px) rotate(-'+a+'deg)">'+m+'×</span>';}).join('')+'<i class="wheel-hub"></i></div></div>'
+ +(last?casinoResultHtml(last,'Wheel landed on '+last.multiplier+'×'):casinoResultHtml(null,''))
+ +'<div class="casino-mini-controls">'+casinoStakeField('wheel-stake','Wager','wheelStake',ui.wheelStake)+'<button class="btn" data-act="wheelPlay"'+(ui.wheelBusy?' disabled':'')+'>'+(ui.wheelBusy?'Spinning…':'Spin')+'</button></div></div>'+casinoHistoryHtml()+'</section>';
+}
+function pachinkoBoard(last){
+ var rows='';for(var r=1;r<=8;r++){rows+='<div class="pachinko-row">'+Array.from({length:r+1},function(){return '<i class="pachinko-peg"></i>';}).join('')+'</div>';}
+ var slots=PACHINKO_MULTIPLIERS.map(function(m,i){return '<div class="pachinko-slot'+(last&&last.index===i?' on':'')+'">'+m+'×</div>';}).join('');
+ var drop=!!last&&ui.pachinkoAnimationSeen!==last.roundId;if(drop)ui.pachinkoAnimationSeen=last.roundId;
+ var ball=last?'<i class="pachinko-ball'+(drop?' drop':'')+'" style="left:var(--x8);'+last.route.map(function(x,i){return '--x'+i+':'+x+'%;';}).join('')+'"></i>':'';
+ return '<div class="pachinko-board">'+ball+rows+'<div class="pachinko-slots">'+slots+'</div></div>';
+}
+function pachinkoHtml(){
+ var last=state.casino.pachinko.last;
+ return '<section class="sec">'+casinoMiniHeader('Pachinko')
+ +'<p class="muted small">The ball bounces left or right at each peg. The multiplier it lands on is the total return, including your wager.</p>'
+ +pachinkoBoard(last)
+ +(last?casinoResultHtml(last,'Ball landed on '+last.multiplier+'×'):casinoResultHtml(null,''))
+ +'<div class="casino-mini-controls">'+casinoStakeField('pachinko-stake','Wager','pachinkoStake',ui.pachinkoStake)+'<button class="btn" data-act="pachinkoPlay"'+(ui.pachinkoBusy?' disabled':'')+'>'+(ui.pachinkoBusy?'Dropping…':'Drop ball')+'</button></div></div>'+casinoHistoryHtml()+'</section>';
+}
+function viewOther(){var game=ui.casino||'menu';if(game==='bj')return blackjackHtml();if(game==='baccarat')return baccaratHtml();if(game==='color')return colorHtml();if(game==='wheel')return wheelHtml();if(game==='pachinko')return pachinkoHtml();return casinoMenu();}
 
 /* ----- setup ----- */
 function viewSetup(){var p=state.player,S=state.settings,pf=function(k,l,ph){return '<div class="field"><label for="pl-'+k+'">'+l+'</label><input type="text" id="pl-'+k+'" data-bind="pl" data-k="'+k+'" value="'+esc(p[k])+'" placeholder="'+(ph||'')+'"></div>';};
  var nf=function(k,l){return '<div class="field"><label for="st-'+k+'">'+l+'</label><input type="text" inputmode="decimal" id="st-'+k+'" data-bind="set" data-k="'+k+'" data-raw="set-'+k+'" value="'+esc(rawVal('set-'+k,String(S[k])))+'"></div>';};
+ var cpf=function(m){var key='color-payout-'+m,value=rawVal(key,String(state.casino.color.payouts[m])),n=parseNum(value),valid=n!=null&&n>=0&&n<=100;return '<div class="field"><label for="color-payout-'+m+'">Return for '+m+(m===1?' match':' matches')+' (×)</label><input type="text" inputmode="decimal" id="color-payout-'+m+'" data-bind="colorPayout" data-matches="'+m+'" data-raw="'+key+'" value="'+esc(value)+'">'+(valid?'':'<span class="err">Enter a value from 0 to 100.</span>')+'</div>';};
  return '<section class="sec"><header><h2>Setup</h2></header>'
  +'<div class="card sec"><h3>Player card</h3><div class="form-grid">'+pf('name','Player name')+'<div class="field"><label for="pl-team">Team</label><select id="pl-team" data-bind="plteam">'+teamOpts(p.team)+'</select></div>'+pf('pos','Position','e.g. SG')+pf('ovr','Overall','e.g. 85')+pf('height','Height','e.g. 6\'6"')+pf('build','Build / archetype','')+'</div></div>'
  +'<div class="card sec"><h3>Odds and lines</h3><div class="form-grid">'+nf('margin','Sportsbook margin (%)')+nf('baseMy','Team PPG baseline')+nf('baseOpp','Opponent PPG baseline')+nf('baseGames','Baseline weight (games)')+'</div>'
  +'<label style="display:inline-flex;gap:.4rem;align-items:center;font-size:.9rem"><input type="checkbox" id="st-ot" data-bind="ot"'+(S.includeOT?' checked':'')+'> Include overtime in totals and handicaps</label>'
  +'<p class="muted small">Odds come from your recorded games: season mean, last 5, history vs the selected opponent and game-to-game variation. The baselines count as pseudo-games until your own data takes over. Quarter lines are only suggested after 3 recorded games. Odds with little data are labeled Provisional, and markets with no data show a flat placeholder.</p></div>'
+ +'<div class="card sec"><h3>Color Game payout returns</h3><p class="muted small">Set the total return multiplier for each dice-match count. Traditional defaults are 0×, 2×, 3× and 4×. These settings are stored in this browser and are not admin-protected.</p><div class="form-grid">'+[0,1,2,3].map(cpf).join('')+'</div><p class="muted small">Payouts include the original bet and apply to each color bet separately.</p></div>'
  +'<div class="card sec"><h3>Backup</h3><p class="muted small">Data lives in this browser. Copy a backup now and then, and paste it back here to restore it on another device or after clearing site data.'+(storageOK?'':' <b style="color:var(--push)">Browser storage is blocked here, so nothing will persist until you allow it. Use the backup.</b>')+'</p>'
  +'<div class="row"><button class="btn ghost" data-act="showBackup">'+(ui.showBackup?'Hide backup':'Show backup')+'</button><button class="btn ghost" data-act="copyBackup">Copy backup</button></div>'
  +(ui.showBackup?'<textarea id="backup-out" readonly rows="6" aria-label="Backup data">'+esc(JSON.stringify(state))+'</textarea>':'')
@@ -853,7 +973,7 @@ function blackjackValue(hand){var total=0,aces=0;
  while(total>21&&aces){total-=10;aces--;}return total;}
 function cardHtml(c,back){if(back)return '<div class="playing-card back" aria-label="Hidden card"></div>';var red=c.suit==='♥'||c.suit==='♦';return '<div class="playing-card'+(red?' red':'')+'"><span>'+esc(c.rank)+c.suit+'</span><span style="text-align:right">'+esc(c.suit)+'</span></div>'; }
 function casinoCards(cards,hideSecond){return cards.map(function(c,i){return cardHtml(c,hideSecond&&i===1);}).join('');}
-function casinoRecord(game,result,stake,delta){state.casino.history.unshift({id:uid(),game:game,result:result,stake:stake,delta:r2(delta),at:new Date().toISOString()});state.casino.history=state.casino.history.slice(0,30);}
+function casinoRecord(game,result,stake,delta,roundId){state.casino.history.unshift({id:uid(),roundId:roundId||null,game:game,result:result,stake:stake,delta:r2(delta),at:new Date().toISOString()});state.casino.history=state.casino.history.slice(0,30);}
 function casinoLoss(label,stake,result){var now=new Date().toISOString();
  state.ledger.push({id:uid(),t:now,kind:'CASINO',betId:null,delta:0,res:result||'LOSS',game:label});
  casinoRecord(label,result||'LOSS',stake,-stake);}
@@ -921,6 +1041,77 @@ function baccaratDeal(){
  casinoRecord('Baccarat',side===result?'WIN':result==='tie'?'TIE':'LOSS',stake,profit);
  commit();toast(result.toUpperCase()+' wins · '+(profit>=0?'+'+ccFmt(profit):'−'+ccFmt(Math.abs(profit))));}
 
+function casinoMiniStake(key,label){
+ var stake=parseStake(ui[key]);
+ if(stake==null){toast('Enter a '+label+' wager above 0.');return null;}
+ if(stake>balance()){toast('Wager exceeds your balance.');return null;}
+ return stake;
+}
+function casinoMiniSettle(label,stake,multiplier,roundId){
+ var payout=r2(stake*multiplier);if(!isFinite(payout)){toast('That payout is too large.');return null;}
+ var result=payout>stake?'WIN':payout===stake?'PUSH':'LOSS',now=new Date().toISOString();
+ state.ledger.push({id:uid(),t:now,kind:'CASINO',betId:null,roundId:roundId,delta:-stake,res:'WAGER',game:label});
+ if(payout>0)state.ledger.push({id:uid(),t:new Date().toISOString(),kind:'CASINO',betId:null,roundId:roundId,delta:payout,res:result,game:label});
+ var profit=r2(payout-stake);casinoRecord(label,result,stake,profit,roundId);
+ return {result:result,payout:payout,profit:profit};
+}
+function colorPlay(){
+ if(ui.colorBusy)return;
+ var bets=[],totalStake=0;
+ for(var i=0;i<COLOR_GAME_COLORS.length;i++){
+  var color=COLOR_GAME_COLORS[i][0],raw=String(ui.colorBets[color]||'').trim();
+  if(!raw)continue;
+  var amount=parseNum(raw);if(amount==null||amount<0){toast('Enter a valid non-negative bet for '+COLOR_GAME_COLORS[i][1]+'.');return;}
+  if(amount===0)continue;
+  amount=r2(amount);if(amount<=0){toast('Each color bet must be at least 0.01 CC.');return;}
+  totalStake=r2(totalStake+amount);bets.push({color:color,stake:amount});
+ }
+ if(!bets.length||totalStake<=0){toast('Place a bet on at least one color.');return;}
+ if(!isFinite(totalStake)||totalStake>balance()){toast('Total color bets exceed your balance.');return;}
+ var dice=[];for(var d=0;d<3;d++)dice.push(COLOR_GAME_COLORS[Math.floor(Math.random()*COLOR_GAME_COLORS.length)][0]);
+ var roundId=uid(),totalPayout=0;
+ bets=bets.map(function(b){
+  var matches=dice.filter(function(c){return c===b.color;}).length,multiplier=state.casino.color.payouts[matches],payout=r2(b.stake*multiplier);
+  if(!isFinite(payout))return null;
+  totalPayout=r2(totalPayout+payout);
+  return {color:b.color,stake:b.stake,matches:matches,multiplier:multiplier,payout:payout,profit:r2(payout-b.stake)};
+ });
+ if(bets.indexOf(null)!==-1||!isFinite(totalPayout)){toast('The configured payout is too large for this wager.');return;}
+ var profit=r2(totalPayout-totalStake),result=profit>0?'WIN':profit<0?'LOSS':'PUSH',now=new Date().toISOString();
+ ui.colorBusy=true;
+ state.ledger.push({id:uid(),t:now,kind:'CASINO',betId:null,roundId:roundId,delta:-totalStake,res:'WAGER',game:'Philippine Color Game'});
+ if(totalPayout>0)state.ledger.push({id:uid(),t:new Date().toISOString(),kind:'CASINO',betId:null,roundId:roundId,delta:totalPayout,res:result,game:'Philippine Color Game'});
+ var round={roundId:roundId,dice:dice,bets:bets,totalStake:totalStake,totalPayout:totalPayout,profit:profit,result:result,at:now};
+ state.casino.color.last=round;state.casino.color.rounds.push(round);state.casino.color.rounds=state.casino.color.rounds.slice(-30);
+ casinoRecord('Philippine Color Game',result,totalStake,profit,roundId);
+ ui.colorBets={};
+ commit();toast('Dice: '+dice.map(function(c){return c.toUpperCase();}).join(' · ')+' · Net '+ccS(profit));
+ releaseCasinoBusy('colorBusy','color',1300);
+}
+function wheelPlay(){
+ if(ui.wheelBusy)return;
+ var stake=casinoMiniStake('wheelStake','wheel');if(stake==null)return;
+ var index=Math.floor(Math.random()*WHEEL_MULTIPLIERS.length),multiplier=WHEEL_MULTIPLIERS[index];
+ var roundId=uid(),settled=casinoMiniSettle('Multiplier Wheel',stake,multiplier,roundId);if(!settled)return;
+ ui.wheelBusy=true;
+ state.casino.wheel.last={roundId:roundId,index:index,multiplier:multiplier,angle:1800-index*45-22.5,profit:settled.profit};
+ commit();toast('Wheel: '+multiplier+'× · '+settled.result+' '+ccS(settled.profit));
+ releaseCasinoBusy('wheelBusy','wheel',4600);
+}
+function pachinkoPlay(){
+ if(ui.pachinkoBusy)return;
+ var stake=casinoMiniStake('pachinkoStake','Pachinko');if(stake==null)return;
+ var index=0,route=[50],x;
+ for(var i=1;i<=8;i++){if(Math.random()>=0.5)index++;x=50+(2*index-i)*(100/18);route.push(Math.round(x*100)/100);}
+ var multiplier=PACHINKO_MULTIPLIERS[index],roundId=uid(),settled=casinoMiniSettle('Pachinko',stake,multiplier,roundId);
+ if(!settled)return;
+ ui.pachinkoBusy=true;
+ state.casino.pachinko.last={roundId:roundId,index:index,multiplier:multiplier,route:route,profit:settled.profit};
+ commit();toast('Pachinko: '+multiplier+'× · '+settled.result+' '+ccS(settled.profit));
+ releaseCasinoBusy('pachinkoBusy','pachinko',1500);
+}
+function releaseCasinoBusy(key,game,delay){setTimeout(function(){ui[key]=false;if(ui.tab==='other'&&ui.casino===game)commit();},delay);}
+
 /* ---------- runtime ---------- */
 if(typeof document==='undefined')return;
 var app=document.getElementById('app');
@@ -970,6 +1161,9 @@ document.addEventListener('click',function(e){
   case 'bjDouble':{bjDouble();return;}
   case 'baccaratSide':{ui.baccaratSide=d.side;commit();return;}
   case 'baccaratDeal':{baccaratDeal();return;}
+  case 'colorPlay':{colorPlay();return;}
+  case 'wheelPlay':{wheelPlay();return;}
+  case 'pachinkoPlay':{pachinkoPlay();return;}
   case 'toggleMarket':{ui.marketOpen[d.market]=ui.marketOpen[d.market]===false?true:false;commit();return;}
   case 'pick':{if(!state.next){toast('Select your next opponent first.');return;}var sl=state.slip,ex=sl.legs.filter(function(l){return l.marketId===d.id;})[0];
    if(ex&&ex.side===d.side)sl.legs=sl.legs.filter(function(l){return l!==ex;});else if(ex)ex.side=d.side;else sl.legs.push({id:uid(),marketId:d.id,side:d.side,odds:'',stake:''});ui.slipErr='';commit();return;}
@@ -1013,6 +1207,15 @@ function onField(e){
  switch(b){
   case 'casinoStake':ui.casinoStake=v;break;
   case 'baccaratStake':ui.baccaratStake=v;break;
+  case 'colorBet':ui.colorBets[d.color]=v;break;
+  case 'colorPayout':{
+   var matches=parseInt(d.matches,10),key='color-payout-'+d.matches,n=parseNum(v);
+   ui.raw[key]=v;
+   if(matches>=0&&matches<=3&&n!=null&&n>=0&&n<=100){state.casino.color.payouts[matches]=r2(n);delete ui.raw[key];}
+   break;
+  }
+  case 'wheelStake':ui.wheelStake=v;break;
+  case 'pachinkoStake':ui.pachinkoStake=v;break;
   case 'next':setNext(v);toast(v?'Next matchup: '+state.player.team+' vs '+v:'Opponent cleared');break;
   case 'perf':ui.perf=v;break;
   case 'line':{var l=ln(d.id);l.manual=true;l.raw=v;l.line=parseNum(v);break;}
